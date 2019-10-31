@@ -9,18 +9,38 @@
 <body>
 <section class="section-login">
 <form class="jumbotron-login" method = "POST" action = "../includes/server/login.php">
+    <div  class="label-container">
+        <label class="label-text"><h1>Sign In</h1></label>
+    </div>
+    <div class = "form-container">
+    <?php
+    if (isset($_GET['err']))
+    {
+        if ($_GET['err'] == 'noexist')
+            echo '<label class="message-color">Incorrect credentials.</label>';
+        else if ($_GET['err'] == 'empty')
+        {
+            echo '<label class="message-color">All fields are required.</label>'; 
+        }
+    }
+    ?> 
     <div  class="form-group">
-        <label class="label-text">Username or Email</label>
-        <input type="text" class="form-control" name = "user"/>
+       <label class="label-text label-color"></label>
+        <input type="text" class="form-control" name = "user" placeholder="username or email..."/>
     </div>
     <div  class="form-group">
-        <label class = "label-text">Password</label>
-        <input type="password" class="form-control" name = "pass"/>
+        <label class = "label-text label-color"></label>
+        <input type="password" class="form-control" name = "pass" placeholder="password..."/>
     </div>
     <div class="form-group">
         <button  type="submit" class="btn-success" name="login">Login</button><br/>
-        <label><a href = "forgot.php">forgot password?</a></label><br/>
+        <div class = "href-link">
+        <label><a href = "reset.php">forgot password?</a></label>
+        </div>
+        <div class = "href-link">
         <label><a href = "signup.php">Don't have an account?</a></label>
+        </div>
+    </div>
     </div>
 </form>
 </section>

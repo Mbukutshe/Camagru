@@ -19,7 +19,6 @@
 
 				)";
 		$obj->exec($sql);
-		echo "Everything works perfectly";
 	}
 	catch(PDOException $ex)
 	{

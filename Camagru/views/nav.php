@@ -10,15 +10,15 @@
 <section class="section">
     <nav class = "top-menu">
         <div class="logo">
-            <img src = "../includes/img/logo.png" width = "120px" height = "120px"/>
+            <img id="logo-icon" src = "../includes/img/logo.png" width = "120px" height = "120px"/>
         </div>
         <div class = "navigation">
             <ul class = "nav-ul">
-                <li class= "nav-item">Gallery</li>
+                <li id="home" class= "nav-item">Gallery</li>
                 <li class= "nav-item">About</li>
                 <li class= "nav-item">Contact</li>
                 <li class= "nav-item">Help</li>
-                <li class= "nav-item">login</li>
+                <li id="getin" class= "nav-item">login</li>
             </ul>
         </div>
     </nav>

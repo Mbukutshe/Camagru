@@ -6,8 +6,7 @@
         $f_pass = $_POST['pass'];
         if (empty($user)||empty($f_pass))
         {
-            echo "All fields are required!";
-            header('location: ../../views/login.php');
+            header('location: ../../views/login.php?err=empty');
         }
         else
         {
@@ -15,7 +14,7 @@
             {
                 $code = 'YES';
                 $user_key = hash('md5', $f_pass, FALSE);
-                $sql = "SELECT * users WHERE username = ? OR email = ? AND user_key = ? AND account_confirmed = ?";
+                $sql = "SELECT * FROM users WHERE (username = ? OR email = ?) AND (user_key = ? AND account_confirmed = ?)";
                 $res = $obj->prepare($sql);
                 $res->bindParam(1, $user);
                 $res->bindParam(2, $user);
@@ -24,13 +23,12 @@
                 $res->execute();
                 if ($res->rowCount())
                 {
-                    echo "Perfectly";
                     header("location: ../../views/home.php");
                 }
                 else
-                    {
-                        echo "Something went wrong";
-                    }
+                {
+                    header('location: ../../views/login.php?err=noexist');
+                }
             }
             catch(PDOException $ex)
             {
@@ -38,4 +36,5 @@
             }
         }
     }
+    $obj = null;
 ?>

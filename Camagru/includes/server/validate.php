@@ -1,5 +1,5 @@
 <?php
-    include_once '../config/setup.php';
+    include_once '../../config/setup.php';
     if (isset($_GET['email']) && isset($_GET['code']))
     {
         try
@@ -14,7 +14,7 @@
             if ($res->rowCount())
             {
                 echo "Email verified.";
-                header("location: ");
+                header("location: ../../views/login.php");
             }
             else
             {
@@ -26,4 +26,5 @@
             echo "Error : ".$ex->getMessage();
         }
     }
+    $obj = null;
 ?>

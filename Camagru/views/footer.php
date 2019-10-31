@@ -4,6 +4,7 @@
     </div>
     </section>
     <?php
+        echo '<script type="text/javascript" src="../includes/scripts/myscript.js"></script>';
         if ($_SERVER['PHP_SELF'] == '/camagru/views/home.php')
             echo '<script type="text/javascript" src="../includes/scripts/gallery.js"></script>';
         else
