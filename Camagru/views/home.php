@@ -1,6 +1,6 @@
 <?php
  include_once 'nav.php';
- include_once 'config/setup.php';
+ include_once '../config/setup.php';
 ?>
     <div class="pagination">
  <!--   page: <span id="page"></span>-->

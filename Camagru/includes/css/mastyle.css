@@ -4,6 +4,10 @@ body
     height: 100%;
     font-family: Poppins-Regular, sans-serif;
 }
+#out
+{
+    display: none;
+}
 textarea:focus, input:focus 
 {
     border-color: transparent !important;
@@ -143,8 +147,50 @@ li.nav-item{
     display: 'inline';
     position: absolute;
     background: #fff;
+    border-radius: 10px;
     overflow: scroll;
     border: 1px solid #4CAF50;
+}
+.dash-main
+{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: 'block';
+    background: #fff;
+    text-align: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #4CAF50;
+}
+.dash-container
+{
+    width: 50%;
+    height: 600px;
+    margin-top: 5px;
+    border-radius: 5px;
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    display: 'block';
+}
+.edit
+{
+    width : 100px;
+    height : 100px;
+    background : #000;
+    border-radius : 10px;
+    text-align: center;
+}
+.row:after 
+{
+    display: block;
+}
+.column 
+{
+    float: left;
+    width: 40%;
+    padding: 2%;
 }
 #gallery-list
 {
@@ -373,6 +419,16 @@ li.nav-item{
     align-items: center;
     text-align: center;
 }
+.update_button
+{
+    width: 50%;
+    height: 30%;
+    padding: 1%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    align-items: center;
+    margin: 0 auto;
+}
 .label-container
 {
     width: 100%;
@@ -405,7 +461,7 @@ a
     border-radius: 6px;
     cursor: pointer;
     width: 80%;
-    margin: 0px auto;
+    margin: 0 auto;
     font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
     opacity: 1;

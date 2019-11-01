@@ -18,7 +18,7 @@
                 <li class= "nav-item">About</li>
                 <li class= "nav-item">Contact</li>
                 <li class= "nav-item">Help</li>
-                <li id="getin" class= "nav-item">login</li>
+                <li id="getin" class= "nav-item"><span id="in">Log In</span><span id="out">Sign Out</span></li>
             </ul>
         </div>
     </nav>
