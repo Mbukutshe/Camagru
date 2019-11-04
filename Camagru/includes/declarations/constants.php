@@ -4,5 +4,7 @@
     $email_change = "Change Email Address";
     $username_change = "Change Username";
     $pref_change = "Change Preferences";
-    $sender = "From : admin@camagru.co.za";
+    $senders = "MIME-Version: 1.0" . "\r\n";
+    $sender  = "Content-type:text/html;charset=ISO-8859-1" . "\r\n";
+    $sender = "From : admin@camagru.co.za". "\r\n";
 ?>

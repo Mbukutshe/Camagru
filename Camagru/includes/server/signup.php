@@ -1,11 +1,12 @@
 <?php
     include_once '../../config/setup.php';
+    include_once '../declarations/constants.php';
     if (isset($_POST['signup']))
     {
-        $user = $_POST['user'];
-        $email = $_POST['email'];
-        $f_pass = $_POST['pass1'];
-        $sec_pass = $_POST['pass2'];
+        $user = trim($_POST['user']);
+        $email = trim($_POST['email']);
+        $f_pass = trim($_POST['pass1']);
+        $sec_pass = trim($_POST['pass2']);
         if (empty($user)||empty($email)||empty($f_pass)||empty($sec_pass))
         {
             header('location: ../../views/signup.php?err=empty');
@@ -33,10 +34,36 @@
                 $res->execute();
                 if ($res->rowCount())
                 {
-                    $body = "http://localhost:8080/camagru/includes/server/validate.php?email=$email&code=$code";
-                    mail($email,  $veri_subj, $body, $sender);
-                    echo "Check your email for verification";
-                    header("location: ../../views/login.php");
+                    $body = "
+                    <html>
+                        <head>
+                            <style>
+                            .btn-success
+                            {
+                                background-color: #4CAF50;
+                                color: white;
+                                padding: 10px 20px;
+                                border: none;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                width: 80%;
+                                margin: 0 auto;
+                                font-size: 1em;
+                                font-family: Arial, Helvetica, sans-serif;
+                                opacity: 1;
+                            }
+                            </style>
+                        </head>
+                        <body>
+                               <a href = 'http://localhost:8080/camagru/includes/server/validate.php?email=$email&code=$code'>
+                               <button type = 'button' class = 'btn-success'>Verify Camagru Account</button></a>
+                        </body>
+                        </html>
+                        ";
+                    if (mail($email,  $veri_subj, $body, $sender))
+                        header("location: ../../views/login.php?err=success");
+                    else
+                        header("location: ../../views/signup.php?err=err");
                 }
                 else
                 {

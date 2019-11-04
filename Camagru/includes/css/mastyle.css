@@ -8,6 +8,14 @@ body
 {
     display: none;
 }
+#text-upd, #text-uplabel, #changes
+{
+    display: none;
+}
+.edit-opacity
+{
+    background-color: rgba(0, 0, 0, 0.5);
+}
 textarea:focus, input:focus 
 {
     border-color: transparent !important;
@@ -156,7 +164,7 @@ li.nav-item{
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    display: 'block';
+    display: 'inline-block';
     background: #fff;
     text-align: center;
     align-items: center;
@@ -165,14 +173,14 @@ li.nav-item{
 }
 .dash-container
 {
-    width: 50%;
+    width: 100%;
     height: 600px;
     margin-top: 5px;
     border-radius: 5px;
     margin: 0 auto;
     text-align: center;
     align-items: center;
-    display: 'block';
+    display: 'inline-block';
 }
 .edit
 {
@@ -182,15 +190,18 @@ li.nav-item{
     border-radius : 10px;
     text-align: center;
 }
+
 .row:after 
 {
     display: block;
 }
 .column 
 {
-    float: left;
-    width: 40%;
-    padding: 2%;
+
+    width: 30%;
+    height : 100%;
+    padding: 1%;
+    display: inline-block;
 }
 #gallery-list
 {
@@ -318,6 +329,15 @@ li.nav-item{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+.dash-form-container
+{
+    width: 100vh;  
+    min-height: 100vh;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
 .form-control
 {
@@ -502,10 +522,20 @@ a
       width: 49.99999%;
       margin: 6px 0;
     }
+    .img-dash
+    {
+        width: 50px;
+        height: 50px;
+    }
   }
   
   @media only screen and (max-width: 500px) {
     .responsive {
       width: 100%;
+    }
+    .img-dash
+    {
+        width: 50px;
+        height: 50px;
     }
   }

@@ -22,6 +22,10 @@
         {
             echo '<label class="message-color">All fields are required.</label>'; 
         }
+        else if ($_GET['err'] == 'success')
+        {
+            echo '<label class="message-green">Check your email for verification.</label>'; 
+        }
     }
     ?> 
     <div  class="form-group">

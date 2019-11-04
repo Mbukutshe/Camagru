@@ -18,7 +18,8 @@
             else
                 if ($_SERVER['PHP_SELF'] == '/camagru/views/dashboard.php')
                 {
-                    echo '<script type="text/javascript" src="../includes/scripts/profile.js"></script>';
+                    echo '<script type="text/javascript" src="../includes/scripts/profile.js"></script>
+                    <script type="text/javascript" src="../includes/scripts/profile_update.js"></script>';
                 }
     ?>
 </body>

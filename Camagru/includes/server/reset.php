@@ -3,7 +3,7 @@
     include_once '../declarations/constants.php';
     if (isset($_POST['reset']))
     {
-        $email = $_POST['user'];
+        $email = trim($_POST['user']);
 
         if (empty($email))
         {

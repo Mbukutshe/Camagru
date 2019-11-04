@@ -4,8 +4,8 @@
     {
         try
         {
-            $email = $_GET['email'];
-            $code = $_GET['code'];
+            $email = trim($_GET['email']);
+            $code = trim($_GET['code']);
             $sql = "UPDATE users SET account_confirmed = 'YES' WHERE email = ? AND confirmation_code = ?";
             $res = $obj->prepare($sql);
             $res->bindParam(1, $email);

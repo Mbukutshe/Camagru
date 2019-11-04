@@ -44,9 +44,6 @@
     <div class="form-group">
         <button  type="submit" class="btn-success" name="login">create</button><br/>
         <div class = "href-link">
-        <label><a href = "reset.php">forgot password?</a></label>
-        </div>
-        <div class = "href-link">
         <label><a href = "signup.php">Don't have an account?</a></label>
         </div>
     </div>

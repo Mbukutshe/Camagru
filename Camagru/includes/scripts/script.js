@@ -94,7 +94,7 @@ function styleCanvasRemove(img)
   img.style.marginTop = '1%';
   img.style.display = 'inline-block';
   img.style.boxShadow = 'none';
-  img.src = "../img/delete.png";
+  img.src = "../includes/img/delete.png";
   return img;
 }
 
@@ -110,7 +110,14 @@ captureButton.addEventListener('click', (event) => {
     div.appendChild(canvasElement);
     div.appendChild(img);
     li.appendChild(div);
-    ul.appendChild(li);
+    if (ul.firstChild)
+    {
+      ul.insertBefore(li, ul.firstChild);
+    }
+    else
+    {
+      ul.appendChild(li);
+    }
     const context = canvasElement.getContext('2d');
     context.drawImage(previewImage, 0, 0, 120, 120);
     context.drawImage(videoPlayer, 0, 0, 120, 120);

@@ -2,8 +2,8 @@
     include_once '../../config/setup.php';
     if (isset($_POST['login']))
     {
-        $user = $_POST['user'];
-        $f_pass = $_POST['pass'];
+        $user = trim($_POST['user']);
+        $f_pass = trim($_POST['pass']);
         if (empty($user)||empty($f_pass))
         {
             header('location: ../../views/login.php?err=empty');
