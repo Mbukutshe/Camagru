@@ -23,7 +23,15 @@
                 $res->execute();
                 if ($res->rowCount())
                 {
+                    session_start();
                     header("location: ../../views/home.php");
+                    $res->setFetchMode(PDO::FETCH_ASSOC);
+                    $row = $res->fetch();
+                    $_SESSION['user_id'] = $row['id'];
+                    $_SESSION['user_name'] = $row['username'];
+                    $_SESSION['user_email'] = $row['email'];
+                    $_SESSION['confirmed'] = $row['account_confirmed'];
+                    $_SESSION['pref'] = $row['receive_notifications'];
                 }
                 else
                 {

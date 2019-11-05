@@ -14,7 +14,7 @@
         <a href = "#" id = "btn_next">&raquo;</a>
     </div>
     <div class="gallery-main">
-        <ul id = "gallery-list"> 
+        <ul id = "gallery-list">
         </ul>
     </div>
 <?php

@@ -34,32 +34,7 @@
                 $res->execute();
                 if ($res->rowCount())
                 {
-                    $body = "
-                    <html>
-                        <head>
-                            <style>
-                            .btn-success
-                            {
-                                background-color: #4CAF50;
-                                color: white;
-                                padding: 10px 20px;
-                                border: none;
-                                border-radius: 6px;
-                                cursor: pointer;
-                                width: 80%;
-                                margin: 0 auto;
-                                font-size: 1em;
-                                font-family: Arial, Helvetica, sans-serif;
-                                opacity: 1;
-                            }
-                            </style>
-                        </head>
-                        <body>
-                               <a href = 'http://localhost:8080/camagru/includes/server/validate.php?email=$email&code=$code'>
-                               <button type = 'button' class = 'btn-success'>Verify Camagru Account</button></a>
-                        </body>
-                        </html>
-                        ";
+                    $body = "http://localhost:8080/camagru/includes/server/validate.php?email=$email&code=$code";
                     if (mail($email,  $veri_subj, $body, $sender))
                         header("location: ../../views/login.php?err=success");
                     else

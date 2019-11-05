@@ -128,7 +128,7 @@ captureButton.addEventListener('click', (event) => {
     let picture = canvasElement.toDataURL();
     fetch('/api/save_image.php', {
       method : 'post',
-      body   : JSON.stringify({data: picture })
+      body   : JSON.stringify({data: picture})
     })
     .then((res) => res.json())
     .then((data) => {

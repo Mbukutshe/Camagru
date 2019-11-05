@@ -14,9 +14,10 @@
 				(
 					id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
 					username VARCHAR(20) UNIQUE NOT NULL,
+					user_key VARCHAR(50) NOT NULL,
 					email VARCHAR(50) NOT NULL,
 					account_confirmed VARCHAR(4) NOT NULL DEFAULT 'NO',
-					confirmation_code INT(11) NOT NULL,
+					confirmation_code VARCHAR(10000) NOT NULL,
 					receive_notifications VARCHAR(4) NOT NULL DEFAULT 'YES'
 
 				)";

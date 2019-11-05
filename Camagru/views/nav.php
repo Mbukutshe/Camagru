@@ -17,8 +17,8 @@
                 <li id="home" class= "nav-item">Gallery</li>
                 <li class= "nav-item">About</li>
                 <li class= "nav-item">Contact</li>
-                <li class= "nav-item">Help</li>
-                <li id="getin" class= "nav-item"><span id="in">Log In</span><span id="out">Sign Out</span></li>
+                <li id = "settings" class= "nav-item">Settings</li>
+                <li id="getin" class= "nav-item"><span id="in" class = "sign-btn">Sign In</span><span id="out" class = "out-btn">Sign Out</span></li>
             </ul>
         </div>
     </nav>

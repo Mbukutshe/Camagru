@@ -1,34 +1,73 @@
 <?php
     include_once '../../config/setup.php';
-    if (isset($_POS['pd']))
+    session_start();
+    if (isset($_POST['upd']))
     {
-        $pass = $_SESSION['pass'];
-        $name= $_SESSION['name'];
-        $mail = $_SESSION['mail'];
-        $pref = $_SESSION['pref'];
+        $name = trim($_SESSION['user_name']);
+        $mail = trim($_SESSION['user_email']);
 
-        $passwd = trim($_POST['pass']);
-        $username= trim($_POST['name']);
-        $email = trim($_POST['mail']);
-        $prefer = trim($_POST['pref']);
+        $username = trim($_POST['name']);
+        $email = trim($_POST['email']);
 
-        if ($pass == $passwd && $name == $username && $mail == $email && $pref == $prefer)
+        if (empty($name) || empty($username) || empty($mail) || empty($email))
+        {
+            header('location: ../../views/dashboard.php?err=empty');
+        }
+        else if ($name == $username && $mail == $email)
         {
             header('location: ../../views/dashboard.php?err=uptodate');
         }
-        if ($pass != $passwd)
+        else if ($email != $mail)
         {
-            header('location: ../../views/reset.php'); 
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+                header('location: ../../views/dashboard.php?err=invamail');
+            else
+            {
+                try
+                {
+                    $sql = "UPDATE users SET email = ? WHERE id = ?";
+                    $res = $obj->prepare($sql);
+                    $res->bindParam(1, $email);
+                    $res->bindParam(2, $_SESSION['user_id']);
+                    $res->execute();
+                    if ($res->rowCount())
+                    {
+                        header('location: ../../views/dashboard.php?err=success');
+                    }
+                    else
+                    {
+                        header('location: ../../views/dashboard.php?err=error');
+                    }
+                }
+                catch(PDOException $ex)
+                {
+                    echo "Error : ".$ex->getMessage();
+                }
+            }
         }
-        if ($email != $mail)
+        else if ($username != $name)
         {
-            
-        }
-        if ($prefer != $pref)
-        {
-
+            try
+            {
+                $sql = "UPDATE users SET username = ? WHERE id = ?";
+                $res = $obj->prepare($sql);
+                $res->bindParam(1, $username);
+                $res->bindParam(2, $_SESSION['user_id']);
+                $res->execute();
+                if ($res->rowCount())
+                {
+                    header('location: ../../views/dashboard.php?err=success');
+                }
+                else
+                {
+                    header('location: ../../views/dashboard.php?err=error');
+                }
+            }
+            catch(PDOException $ex)
+            {
+                echo "Error : ".$ex->getMessage();
+            }
         }
     }
-    header('location: ../../views/dashboard.php?err=success');
     $obj = null;
 ?>

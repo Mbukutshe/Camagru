@@ -1,3 +1,52 @@
+const check = document.getElementById('text-check');
+const notLabel = document.getElementById('not-label');
+const formUpdate = document.getElementById('update-form');
+const saveChanges = document.getElementById('changes');
+var   checkState = check.checked;
+var   isSet = 1;
+check.setAttribute('class', 'form-control');
+check.style.width = '100px';
+check.style.cssFloat = 'right';
+check.style.marginTop = '0';
+check.style.color = 'green';
+check.checked = true;
+check.style.display = 'none';
+notLabel.style.display = 'none';
+check.addEventListener('change', (event)=>
+{
+    checkState = check.checked;
+    var form = document.createElement('form');
+    var input = document.createElement('input');
+    form.action = "../includes/server/notification_pref.php";
+    form.method = "POST";
+    input = createHiddenBox(input,'pref', checkState, 'idCheck');
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+});
+saveChanges.addEventListener('click', (event)=>
+{
+    const textUpd = document.getElementById('text-upd');
+    const textLabel = document.getElementById('text-uplabel');
+    if (textLabel.textContent === "Type the new email address:")
+    {
+        var hidEmail = document.getElementById('email-text');
+        hidEmail.value = textUpd.value;
+    }
+    else if(textLabel.textContent === "Type the new username:")
+    {
+        var hidName = document.getElementById('name-text');
+        hidName.value = textUpd.value;
+    }
+});
+function createHiddenBox(textBox, name, value, id)
+{
+    textBox.id = id;
+    textBox.type = 'hidden';
+    textBox.name = name;
+    textBox.value = value;
+    return textBox;
+}
 function ft_createIconDiv(div)
 {
     div.width = 20;
@@ -72,7 +121,9 @@ window.addEventListener('load', (event)=>
             const change = document.getElementById('edi1');
             var textUpd = document.getElementById('text-upd');
             var textLabel = document.getElementById('text-uplabel');
-            var saveChanges = document.getElementById('changes');
+            var textBox = document.createElement('input');
+            textBox = createHiddenBox(textBox, 'name', userName, 'name-text');
+            formUpdate.appendChild(textBox);
             img.setAttribute('src', '../includes/img/user.png');
             img.addEventListener('mouseover', (event)=>
             {
@@ -89,8 +140,10 @@ window.addEventListener('load', (event)=>
                 saveChanges.style.display = 'block';
                 textUpd.style.display = 'inline-block';
                 textLabel.style.display = 'inline-block';
-                textUpd.value = "Username";
-                textLabel.innerHTML = "Insert the new username:";
+                textUpd.value = userName;
+                textLabel.innerHTML = "Type the new username:";
+                check.style.display = 'none';
+                notLabel.style.display = 'none';
             });
         }
         else if (i == 2)
@@ -100,7 +153,9 @@ window.addEventListener('load', (event)=>
             const change = document.getElementById('edi2');
             var textUpd = document.getElementById('text-upd');
             var textLabel = document.getElementById('text-uplabel');
-            var saveChanges = document.getElementById('changes');
+            var textBox = document.createElement('input');
+            textBox = createHiddenBox(textBox, 'email', emailAddress, 'email-text');
+            formUpdate.appendChild(textBox);
             img.src = '../includes/img/email.png';
             img.addEventListener('mouseover', (event)=>
             {
@@ -117,8 +172,10 @@ window.addEventListener('load', (event)=>
                 saveChanges.style.display = 'block';
                 textUpd.style.display = 'inline-block';
                 textLabel.style.display = 'inline-block';
-                textUpd.value = "Email address";
-                textLabel.innerHTML = "Insert the new email address:";
+                textUpd.value = emailAddress;
+                textLabel.innerHTML = "Type the new email address:";
+                check.style.display = 'none';
+                notLabel.style.display = 'none';
             });
         }
         else if (i == 3)
@@ -162,7 +219,11 @@ window.addEventListener('load', (event)=>
             });
             change.addEventListener('click', (event)=>
             {
-                textUpd.value = "Notification settings";
+                check.style.display = 'inline-block';
+                notLabel.style.display = 'inline-block';
+                saveChanges.style.display = 'none';
+                textUpd.style.display = 'none';
+                textLabel.style.display = 'none';
             });
         }
         else if (i == 5)
