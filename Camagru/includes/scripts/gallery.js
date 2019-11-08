@@ -141,15 +141,21 @@ function changePage(page)
     }
   //  page_span.innerHTML = page;
 
-    if (page == 1) {
+    if (page == 1) 
+    {
         btn_prev.style.visibility = "hidden";
-    } else {
+    } 
+    else 
+    {
         btn_prev.style.visibility = "visible";
     }
 
-    if (page == numPages()) {
+    if (page == numPages()) 
+    {
         btn_next.style.visibility = "hidden";
-    } else {
+    } 
+    else 
+    {
         btn_next.style.visibility = "visible";
     }
 }
@@ -159,6 +165,7 @@ function numPages()
     return Math.ceil(5);
 }
 
-window.addEventListener("load", (event) => {
+window.addEventListener("load", (event) => 
+{
     changePage(1);
 });

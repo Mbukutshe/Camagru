@@ -3,15 +3,14 @@ const height = 340;
 let   zIndex = 1;
 try
 {
-icon1.addEventListener('click', (event)=>{ft_display('../img/tree.png');});
-icon2.addEventListener('click', (event)=>{ft_display('../img/grass.png');});
-icon3.addEventListener('click', (event)=>{ft_display('../img/feather.jpeg');});
-icon4.addEventListener('click', (event)=>{ft_display('../img/bird.jpg');});
-icon5.addEventListener('click', (event)=>{ft_display('../img/tree.png');});
-icon6.addEventListener('click', (event)=>{ft_display('../img/grass.png');});
-icon7.addEventListener('click', (event)=>{ft_display('../img/border.jpg');});
-icon8.addEventListener('click', (event)=>{ft_display('../img/bird.jpg');});
-icon9.addEventListener('click', (event)=>{ft_display('../img/feather.jpeg');});
+icon1.addEventListener('click', (event)=>{ft_display('../includes/img/sticker1.png');});
+icon2.addEventListener('click', (event)=>{ft_display('../includes/img/grass.png');});
+icon3.addEventListener('click', (event)=>{ft_display('../includes/img/sticker2.png');});
+icon4.addEventListener('click', (event)=>{ft_display('../includes/img/sticker3.png');});
+icon5.addEventListener('click', (event)=>{ft_display('../includes/img/tree.png');});
+icon6.addEventListener('click', (event)=>{ft_display('../includes/img/sticker4.png');});
+icon7.addEventListener('click', (event)=>{ft_display('../includes/img/sticker5.png');});
+icon8.addEventListener('click', (event)=>{ft_display('../includes/img/sticker6.png');});
 }
 catch(Exception)
 {
@@ -29,7 +28,7 @@ imagePicker.addEventListener('change', (event)=>{
 function ft_display(pic)
 {
   superposable.src = pic;
-  superposable.style.display = 'inline';
+  superposable.style.display = 'inline-block';
 }
 const startMedia = () => {
     if (!('mediaDevices' in navigator)) {
@@ -57,16 +56,27 @@ const startMedia = () => {
   };
 var count = 'canv1';
 //style for canvas-> an element where the image will be drawn on
-function styleCanvas(canvasElement)
+function styleCanvas(cElement)
 {
-  canvasElement.id = 'canv1';
-  canvasElement.width = 120;
-  canvasElement.height = 120;
-  canvasElement.style.zIndex = 10;
-  canvasElement.style.display = 'inline-block';
-  canvasElement.style.float = 'left';
-  canvasElement.style.borderRight = '1px solid #f5f7f6';
-  return canvasElement;
+  cElement.id = 'canv1';
+  cElement.width = 200;
+  cElement.height = 120;
+  cElement.style.zIndex = 10;
+  cElement.style.display = 'inline-block';
+  cElement.style.float = 'left';
+  cElement.style.borderRight = '1px solid #f5f7f6';
+  return cElement;
+}
+function styleImg(cElement, src)
+{
+  cElement.width = 200;
+  cElement.height = 120;
+  cElement.style.zIndex = 10;
+  cElement.style.display = 'inline-block';
+  cElement.style.float = 'left';
+  cElement.style.borderRight = '1px solid #f5f7f6';
+  cElement.src = src;
+  return cElement;
 }
 //creating style for div containing a canvas
 function styleCanvasDiv(div)
@@ -94,21 +104,68 @@ function styleCanvasRemove(img)
   img.style.marginTop = '1%';
   img.style.display = 'inline-block';
   img.style.boxShadow = 'none';
+  img.style.border = '1px solid red';
   img.src = "../includes/img/delete.png";
   return img;
 }
-
-captureButton.addEventListener('click', (event) => {
+function removeItems()
+{
+  var ul = document.querySelector('#taken-pics');
+  while(ul.firstChild)
+  {
+    ul.removeChild(ul.firstChild);
+  }
+}
+function loadImages(data)
+{
+  if (data)
+  {
+    var idRemove = 0;
     var ul = document.getElementById('taken-pics');
-    var li = document.createElement('li');
+    var json = JSON.parse(data);
+    json.forEach(images => 
+    {
+      var li = document.createElement('li');
+      li.setAttribute('id', images);
+      var div = document.createElement('div');
+      var img = document.createElement('img');
+      var cElement = document.createElement('img');
+      div = styleCanvasDiv(div);
+      img = styleCanvasRemove(img);
+      img.setAttribute("id", "remove"+idRemove);
+      img.addEventListener('click', (event)=>{
+        alert(img.id);
+      });
+      cElement  = styleImg(cElement , "../includes/uploads/"+images);
+      div.appendChild(cElement);
+      div.appendChild(img);
+      li.appendChild(div);
+      if(ul.firstChild)
+      {
+        ul.insertBefore(li, ul.firstChild);
+      }
+      else
+      {
+        ul.appendChild(li);
+      }
+      idRemove++;
+    });
+  }
+}
+captureButton.addEventListener('click', (event) => {
+  /* var ul = document.getElementById('taken-pics');
+   var li = document.createElement('li');
     var div = document.createElement('div');
-    var img = document.createElement('img');
+   var img = document.createElement('img');
+    var imgYes = document.createElement('img');
     var canvasElement = document.createElement('canvas');
     div = styleCanvasDiv(div);
     img = styleCanvasRemove(img);
+    imgYes = styleCanvasYes(imgYes);
     canvasElement = styleCanvas(canvasElement);
     div.appendChild(canvasElement);
     div.appendChild(img);
+    div.appendChild(imgYes);
     li.appendChild(div);
     if (ul.firstChild)
     {
@@ -116,16 +173,48 @@ captureButton.addEventListener('click', (event) => {
     }
     else
     {
-      ul.appendChild(li);
-    }
+      ul.appendChild(div);
+    }*/
+    const canvasElement = document.querySelector('#canvas');
     const context = canvasElement.getContext('2d');
     context.drawImage(previewImage, 0, 0, 120, 120);
     context.drawImage(videoPlayer, 0, 0, 120, 120);
-    context.drawImage(superposable, 0, 0, 120, 120);  
-    videoPlayer.srcObject.getVideoTracks().forEach((track) => {
+  //  context.drawImage(superposable, 0, 0, 120, 120);
+    var name = superposable.src;
+    var superpose = name.replace(/^.*[\\\/]/, '');
+  /*  var form = document.createElement('form');
+    var input = document.createElement('input');
+    var filename = document.createElement('input');
+   /* form.action = "../includes/server/over_lay.php";
+    form.method = "post";
+    input.type = 'hidden';
+    input.name = 'name-img';
+    filename.type = 'hidden';
+    filename.name = 'image';
+    filename.value = superpose;
+    input.value = canvasElement.toDataURL('image/png');
+    form.appendChild(filename);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();*/
+   var http = new XMLHttpRequest();
+   var param = "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose;
+   http.onreadystatechange = function()
+    {
+      if (http.readyState === 4) { 
+          if (http.status === 200) { 
+            removeItems();
+            loadImages(http.responseText);
+          }
+      }
+  };
+  http.open('POST', "../includes/server/over_lay.php", true);
+  http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  http.send(param);
+  /*videoPlayer.srcObject.getVideoTracks().forEach((track) => {
       // track.stop(); 
     });
-    let picture = canvasElement.toDataURL();
+    let picture = canvasElement.toDataURL('image/png');
     fetch('/api/save_image.php', {
       method : 'post',
       body   : JSON.stringify({data: picture})
@@ -142,9 +231,9 @@ captureButton.addEventListener('click', (event) => {
         canvasElement.classList.add('masked');
       }
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error))*/
   });
-  const createImage = (src, alt, title, width, height, className) => {
+/*  const createImage = (src, alt, title, width, height, className) => {
     let newImg = document.createElement("img");
 
     if(src !== null)       newImg.setAttribute("src", src);
@@ -155,7 +244,20 @@ captureButton.addEventListener('click', (event) => {
     if(className !== null) newImg.setAttribute("class", className);
 
     return newImg;
-}
+}*/
 window.addEventListener("load", (event) => {
   startMedia();
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function()
+   {
+     if (http.readyState === 4) { 
+         if (http.status === 200) { 
+            removeItems();
+           loadImages(http.responseText);
+         }
+     }
+ };
+ http.open('POST', "../includes/server/read_user_img.php", true);
+ http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+ http.send();
 });

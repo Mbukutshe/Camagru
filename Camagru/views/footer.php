@@ -1,6 +1,6 @@
     </div>
     <div class = "footer">
-    <p class = "footer-text">&copy;Camagru 2019</p>
+    <p class = "footer-text">&copy;Camagru <em>pty(LTD)</em> 2019</p>
     </div>
     </section>
     <?php

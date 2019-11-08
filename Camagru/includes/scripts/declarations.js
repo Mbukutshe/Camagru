@@ -12,6 +12,5 @@ const icon5 = document.querySelector('#icon5');
 const icon6 = document.querySelector('#icon6');
 const icon7 = document.querySelector('#icon7');
 const icon8 = document.querySelector('#icon8');
-const icon9 = document.querySelector('#icon9');
 const superposable = document.querySelector('#superpose');
 const previewImage = document.querySelector('#image');
