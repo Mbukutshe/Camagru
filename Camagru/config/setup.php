@@ -29,7 +29,7 @@
 				(
 					image_id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
 					image_name VARCHAR(20) UNIQUE NOT NULL,
-					image_path VARCHAR(20) UNIQUE NOT NULL,
+					image_path VARCHAR(20) NOT NULL,
 					upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 					id INT(11) NOT NULL,
 				    FOREIGN KEY(id) REFERENCES users(id)

@@ -1,33 +1,37 @@
+
 //style for gallery div item
 function ft_styleGalleryDiv(div)
 {
   div.width = 400;
-  div.style.height = '400px';
+  div.style.height = '260px';
   div.style.display = 'block';
   div.style.border = '1px solid #f5f7f6';
   div.style.marginTop = '1%';
   div.style.marginBottom = '2%';
-  div.style.boxShadow = '0px 5px 4px 0px darkgrey';
+  div.style.padding = '10px';
+  div.style.borderTopLeftRadius = '20px';
+  div.style.borderBottomRightRadius = '20px';
+  div.style.boxShadow = '0px 8px 5px 0px darkgrey';
   return div;
 }
 //style for gallery image
-function ft_styleGalleryImg(img)
+function ft_styleGalleryImg(img, image)
 {
-  img.width = 400;
-  img.height = 300;
+  img.width = 300;
+  img.height = 200;
   img.style.display = 'block';
   img.style.boxShadow = 'none';
   img.style.border = 'none';
   img.style.padding = 'none';
   img.style.margin = 'none';
-  img.src = "https://www.w3schools.com/css/img_lights.jpg";
+  img.src = image;
   return img;
 }
 //style for the div below an img
 function ft_styleBelowDiv(div)
 {
   div.style.width = 400;
-  div.style.height = '100px';
+  div.style.height = '50px';
   div.style.display = 'block';
   div.style.bottom = '0';
   div.style.left = '0';
@@ -36,8 +40,8 @@ function ft_styleBelowDiv(div)
 //style for 'likes' div
 function ft_styleLikeDiv(div)
 {
-    div.style.width = '200px';
-    div.style.height = '50px';
+    div.style.width = '140px';
+    div.style.height = '20px';
     div.style.display = 'block';
     div.style.border = '1px solid #f5f7f6';
     div.style.bottom = '0px';
@@ -49,8 +53,8 @@ function ft_styleLikeDiv(div)
 //style for 'comments' div
 function ft_styleComDiv(div)
 {
-    div.style.width = '200px';
-    div.style.height = '50px';
+    div.style.width = '140px';
+    div.style.height = '20px';
     div.style.display = 'block';
     div.style.border = '1px solid #f5f7f6';
     div.style.bottom = '0px';
@@ -69,7 +73,7 @@ function ft_styleImgLike(img)
     img.style.bottom = '0';
     return img;
 }
-function ft_createGalleryList()
+function ft_createGalleryList(image)
 {
   var galleryList = document.getElementById('gallery-list');
   var parentDiv = document.createElement('div');
@@ -77,18 +81,41 @@ function ft_createGalleryList()
   var galleryImg = document.createElement('img');
   var likeDiv = document.createElement('div');
   var comDiv = document.createElement('div');
+  var likes = document.createElement('p');
+  likes.value = "12";
+  likes.style.fontSize = '12px';
+  likes.width = 20;
+  likes.height = 20;
+  likes.style.color = 'black';
   var likeImg = document.createElement('img');
   var li = document.createElement('li');
   likeDiv = ft_styleLikeDiv(likeDiv);
   comDiv = ft_styleComDiv(comDiv);
   likeImg = ft_styleImgLike(likeImg);
+
+  likeImg.addEventListener('click', (event)=>
+  {
+    var fpath = galleryImg.src;
+    var fname = fpath.replace(/^.*[\\\/]/, '');
+    alert(fname);
+  });
+  parentDiv.addEventListener('mouseover', (event)=>
+  {
+  //  document.body.style.cursor = 'pointer';
+    parentDiv.style.boxShadow = '1px 1px 10px 10px darkgrey';
+  });
+  parentDiv.addEventListener('mouseout', (event)=>
+  {
+    parentDiv.style.boxShadow = '1px 8px 5px 1px darkgrey';
+  });
   belowDiv = ft_styleBelowDiv(belowDiv);
   parentDiv = ft_styleGalleryDiv(parentDiv);
-  galleryImg = ft_styleGalleryImg(galleryImg);
+  galleryImg = ft_styleGalleryImg(galleryImg, '../includes/uploads/'+image);
   li.setAttribute('class', 'nav-item');
   likeImg.setAttribute('src', '../includes/img/like.png');
   likeImg.setAttribute('class', 'button');
   likeDiv.appendChild(likeImg);
+  likeDiv.appendChild(likes);
   var likeImg = document.createElement('img');
   likeImg = ft_styleImgLike(likeImg);
   likeImg.setAttribute('src', '../includes/img/comment.png');
@@ -101,7 +128,7 @@ function ft_createGalleryList()
   galleryList.appendChild(li);
 }
 var current_page = 1;
-var records_per_page = 6;
+var records_per_page = 12;
 
 function prevPage()
 {
@@ -130,15 +157,46 @@ function changePage(page)
 {
    // var page_span = document.getElementById("page");
     var galleryList = document.querySelector('#gallery-list');
-
     // Validate page
-    if (page < 1) page = 1;
-    if (page > numPages()) page = numPages();
+    if (page < 1)
+    {  
+         page = 1;
+    }
+    var numPage = numPages();
+    if (page > numPage)
+    {
+        page = numPage;
+    }
     while(galleryList.firstChild)
         galleryList.removeChild(galleryList.firstChild);
-    for (var i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
-        ft_createGalleryList();
-    }
+    var allImages = new Array();
+    var http = new XMLHttpRequest();
+    var param = "gallery=yes";
+    http.onreadystatechange = function()
+    {
+        if (http.readyState === 4) { 
+            if (http.status === 200) { 
+                data = http.responseText;
+                var j = 0;
+                if (data)
+                {
+                    var json = JSON.parse(data);
+                    json.forEach(element => 
+                    {
+                        allImages[j] = element;
+                        j++;
+                    });
+                    for (var i = (page-1) * records_per_page; i < (page * records_per_page) && i < allImages.length; i++) 
+                    {
+                        ft_createGalleryList(allImages[i]);
+                    }
+                }
+            }
+        }
+    };
+    http.open('POST', "../includes/server/gallery_images.php", true);
+    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    http.send(param);
   //  page_span.innerHTML = page;
 
     if (page == 1) 
@@ -149,7 +207,6 @@ function changePage(page)
     {
         btn_prev.style.visibility = "visible";
     }
-
     if (page == numPages()) 
     {
         btn_next.style.visibility = "hidden";
@@ -159,12 +216,22 @@ function changePage(page)
         btn_next.style.visibility = "visible";
     }
 }
-
 function numPages()
 {
-    return Math.ceil(5);
+    return Math.ceil(10);
 }
-
+function loadData(data)
+{
+    var i = 0;
+    if (data)
+    {
+        var json = JSON.parse(data);
+        json.forEach(element => 
+        {
+            allImages[i++] = element;
+        });
+    }
+}
 window.addEventListener("load", (event) => 
 {
     changePage(1);

@@ -5,13 +5,9 @@
     <div class = "superposable">
       <label class = "head-sections">Stickers</label>
       <ul class = "side-ul">
-        <li class="side-li" id = "icon1"><img src="../includes/img/sticker1.png" width="50" height="50"/></li>
         <li class="side-li" id = "icon2"><img src="../includes/img/grass.png" width="50" height="50"/></li>
-        <li class="side-li" id = "icon3"><img src="../includes/img/sticker2.png" width="50" height="50"/></li>
         <li class="side-li" id = "icon4"><img src="../includes/img/sticker3.png" width="50" height="50"/></li>
         <li class="side-li" id = "icon5"><img src="../includes/img/tree.png" width="50" height="50"/></li>
-        <li class="side-li" id = "icon6"><img src="../includes/img/sticker4.png" width="50" height="50"/></li>
-        <li class="side-li" id = "icon7"><img src="../includes/img/sticker5.png" width="50" height="50"/></li>
         <li class="side-li" id = "icon8"><img src="../includes/img/sticker6.png" width="50" height="50"/></li>
       </ul>
     </div>

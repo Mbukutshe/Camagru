@@ -1,11 +1,10 @@
 <?php
     session_start();
-    if(isset($_POST['read']))
+    if(isset($_POST['gallery']))
     {
         $img_dir = "../uploads/";
         $array = [];
         $images = scandir($img_dir);
-        $images = preg_grep('~^'.$_SESSION['user_name'].'.*\.png$~', $images);
         foreach($images as $img) 	
         { 
             if($img === '.' || $img === '..') 

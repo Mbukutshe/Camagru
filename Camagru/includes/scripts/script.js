@@ -3,13 +3,9 @@ const height = 340;
 let   zIndex = 1;
 try
 {
-icon1.addEventListener('click', (event)=>{ft_display('../includes/img/sticker1.png');});
 icon2.addEventListener('click', (event)=>{ft_display('../includes/img/grass.png');});
-icon3.addEventListener('click', (event)=>{ft_display('../includes/img/sticker2.png');});
 icon4.addEventListener('click', (event)=>{ft_display('../includes/img/sticker3.png');});
 icon5.addEventListener('click', (event)=>{ft_display('../includes/img/tree.png');});
-icon6.addEventListener('click', (event)=>{ft_display('../includes/img/sticker4.png');});
-icon7.addEventListener('click', (event)=>{ft_display('../includes/img/sticker5.png');});
 icon8.addEventListener('click', (event)=>{ft_display('../includes/img/sticker6.png');});
 }
 catch(Exception)
@@ -104,13 +100,13 @@ function styleCanvasRemove(img)
   img.style.marginTop = '1%';
   img.style.display = 'inline-block';
   img.style.boxShadow = 'none';
-  img.style.border = '1px solid red';
+  img.style.borderRadius = '6px';
   img.src = "../includes/img/delete.png";
   return img;
 }
 function removeItems()
 {
-  var ul = document.querySelector('#taken-pics');
+  var ul = document.getElementById('taken-pics');
   while(ul.firstChild)
   {
     ul.removeChild(ul.firstChild);
@@ -118,10 +114,11 @@ function removeItems()
 }
 function loadImages(data)
 {
+  removeItems();
   if (data)
   {
     var idRemove = 0;
-    var ul = document.getElementById('taken-pics');
+    var ul = document.querySelector('#taken-pics');
     var json = JSON.parse(data);
     json.forEach(images => 
     {
@@ -133,8 +130,26 @@ function loadImages(data)
       div = styleCanvasDiv(div);
       img = styleCanvasRemove(img);
       img.setAttribute("id", "remove"+idRemove);
-      img.addEventListener('click', (event)=>{
-        alert(img.id);
+      img.addEventListener('mouseover', (event)=>
+      {
+        document.body.style.cursor = 'pointer';
+        img.style.boxShadow = '1px 1px 6px 6px darkgrey';
+        img.width = 20;
+        img.height = 20;
+      });
+      img.addEventListener('mouseout', (event)=>
+      {
+        document.body.style.cursor = 'default';
+        img.style.boxShadow = 'none';
+        img.width = 15;
+        img.height = 15;
+      });
+      img.addEventListener('click', (event)=>
+      {
+        var fpath = cElement.src;
+        var fname = fpath.replace(/^.*[\\\/]/, '');
+        successPhp("../includes/server/remove_img.php", "remove=true&image="+fname);
+        readPhp();
       });
       cElement  = styleImg(cElement , "../includes/uploads/"+images);
       div.appendChild(cElement);
@@ -153,111 +168,61 @@ function loadImages(data)
   }
 }
 captureButton.addEventListener('click', (event) => {
-  /* var ul = document.getElementById('taken-pics');
-   var li = document.createElement('li');
-    var div = document.createElement('div');
-   var img = document.createElement('img');
-    var imgYes = document.createElement('img');
-    var canvasElement = document.createElement('canvas');
-    div = styleCanvasDiv(div);
-    img = styleCanvasRemove(img);
-    imgYes = styleCanvasYes(imgYes);
-    canvasElement = styleCanvas(canvasElement);
-    div.appendChild(canvasElement);
-    div.appendChild(img);
-    div.appendChild(imgYes);
-    li.appendChild(div);
-    if (ul.firstChild)
-    {
-      ul.insertBefore(li, ul.firstChild);
-    }
-    else
-    {
-      ul.appendChild(div);
-    }*/
     const canvasElement = document.querySelector('#canvas');
     const context = canvasElement.getContext('2d');
     context.drawImage(previewImage, 0, 0, 120, 120);
     context.drawImage(videoPlayer, 0, 0, 120, 120);
-  //  context.drawImage(superposable, 0, 0, 120, 120);
     var name = superposable.src;
     var superpose = name.replace(/^.*[\\\/]/, '');
-  /*  var form = document.createElement('form');
-    var input = document.createElement('input');
-    var filename = document.createElement('input');
-   /* form.action = "../includes/server/over_lay.php";
-    form.method = "post";
-    input.type = 'hidden';
-    input.name = 'name-img';
-    filename.type = 'hidden';
-    filename.name = 'image';
-    filename.value = superpose;
-    input.value = canvasElement.toDataURL('image/png');
-    form.appendChild(filename);
-    form.appendChild(input);
-    document.body.appendChild(form);
-    form.submit();*/
-   var http = new XMLHttpRequest();
-   var param = "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose;
-   http.onreadystatechange = function()
-    {
-      if (http.readyState === 4) { 
-          if (http.status === 200) { 
-            removeItems();
-            loadImages(http.responseText);
-          }
-      }
+    runPhp("../includes/server/over_lay.php", "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose);
+  });
+function successPhp(script, param)
+{
+  var http = new XMLHttpRequest();
+  http.onreadystatechange = function()
+  {
+    if (http.readyState === 4) { 
+        if (http.status === 200) {
+        }
+    }
   };
-  http.open('POST', "../includes/server/over_lay.php", true);
+  http.open('POST', script, true);
   http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   http.send(param);
-  /*videoPlayer.srcObject.getVideoTracks().forEach((track) => {
-      // track.stop(); 
-    });
-    let picture = canvasElement.toDataURL('image/png');
-    fetch('/api/save_image.php', {
-      method : 'post',
-      body   : JSON.stringify({data: picture})
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      if(data.success){
-        let newImage = createImage(data.path, "new image", "new image", width, height, "masked");
-        let tilt = -(20 + 60 * Math.random());
-        newImage.style.transform = "rotate("+tilt+"deg)";
-        zIndex++;
-        newImage.style.zIndex    = zIndex;
-        newImages.appendChild(newImage);
-        canvasElement.classList.add('masked');
-      }
-    })
-    .catch((error) => console.log(error))*/
-  });
-/*  const createImage = (src, alt, title, width, height, className) => {
-    let newImg = document.createElement("img");
-
-    if(src !== null)       newImg.setAttribute("src", src);
-    if(alt !== null)       newImg.setAttribute("alt", alt);
-    if(title !== null)     newImg.setAttribute("title", title);
-    if(width !== null)     newImg.setAttribute("width", width);
-    if(height !== null)    newImg.setAttribute("height", height);
-    if(className !== null) newImg.setAttribute("class", className);
-
-    return newImg;
-}*/
-window.addEventListener("load", (event) => {
-  startMedia();
+}
+function runPhp(script, param)
+{
   var http = new XMLHttpRequest();
   http.onreadystatechange = function()
    {
      if (http.readyState === 4) { 
          if (http.status === 200) { 
-            removeItems();
+          loadImages(http.responseText);
+         }
+     }
+ };
+ http.open('POST', script, true);
+ http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+ http.send(param);
+}
+function readPhp()
+{
+  var http = new XMLHttpRequest();
+  var param = "read=yes";
+  http.onreadystatechange = function()
+   {
+     if (http.readyState === 4) { 
+         if (http.status === 200) { 
            loadImages(http.responseText);
          }
      }
  };
  http.open('POST', "../includes/server/read_user_img.php", true);
  http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
- http.send();
+ http.send(param);
+}
+window.addEventListener("load", (event) => 
+{
+  startMedia();
+  readPhp();
 });

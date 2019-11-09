@@ -13,10 +13,8 @@
             <img id="logo-icon" src = "../includes/img/logo.png" width = "120px" height = "120px"/>
         </div>
         <div class = "navigation">
-            <ul class = "nav-ul">
+            <ul class = "nav-ul"> 
                 <li id="home" class= "nav-item">Gallery</li>
-                <li class= "nav-item">About</li>
-                <li class= "nav-item">Contact</li>
                 <li id = "settings" class= "nav-item">Settings</li>
                 <li id="getin" class= "nav-item"><span id="in" class = "sign-btn">Sign In</span><span id="out" class = "out-btn">Sign Out</span></li>
             </ul>
