@@ -1,6 +1,11 @@
 <?php
  require_once 'nav.php';
  include_once '../config/setup.php';
+ session_start();
+ if (!isset($_SESSION['user_id']))
+ {
+    header('location: ../index.php');
+ }
 ?>
     <?php
     if (isset($_GET['err']))
@@ -57,7 +62,7 @@
     </form>
     </div>
     <script type='text/javascript'>
-        var userName = "<?php session_start(); if (isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}?>";
+        var userName = "<?php if (isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}?>";
         var emailAddress = "<?php if (isset($_SESSION['user_email'])){echo $_SESSION['user_email'];}?>";
     </script>
 <?php

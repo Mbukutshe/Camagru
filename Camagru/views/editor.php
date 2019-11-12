@@ -1,5 +1,10 @@
 <?php
   require_once 'nav.php';
+  session_start();
+  if (!isset($_SESSION['user_id']))
+  {
+     header('location: ../index.php');
+  }
 ?>
   <div class = "main">
     <div class = "superposable">
@@ -29,7 +34,7 @@
         </div>
         <div id="pick-image">
           <div>
-            <label>Camera is not supported. Check the camera settings or Pick an Image instead</label>
+            <label id = "sticker-selection">Camera is not supported or is blocked. Check the camera settings or Pick an Image instead</label>
           </div>
           <input type="file" accept="image/*" class= "button" id="image-picker"/>
         </div>
@@ -40,65 +45,12 @@
   <label class = "head-sections">My Pictures</label>
    <div class="captured-pic">
    <ul id = 'taken-pics'>
-    <!-- <?php
-        $img_dir = "../includes/uploads/";
-        $images = scandir($img_dir);
-        $html = "";
-        $html = "<ul id = 'taken-pics'>";
-        foreach($images as $img) 	
-        { 
-          if($img === '.' || $img === '..') 
-          {
-            continue;
-          } 		   
-          if ((preg_match('/.jpg/',$img)) || (preg_match('/.png/',$img)))
-          {				
-            $html .="<li>
-            <div style = '  width : 100%;
-            height : 120;  display : inline-block;
-            z-index : 10;
-            padding-right : 2%;
-            border : 1px solid #f5f7f6;
-            border-radius : 5px;
-            margin-top : 1%;
-            margin-bottom : 2%;
-            box-shadow : 0px 9px 8px 0px darkgrey;'>
-            <img style='  width : 200;
-            height : 120;
-            z-index : 10;
-            display : inline-block;
-            float : left;
-            border-right : 1px solid #f5f7f6;' src='".$img_dir.$img."'/>
-            <img style='width : 8%;
-            height : 8%;
-            float : right;
-            Left : 10%;
-            margin-top : 30%;
-            bottom : 0px;
-            display : block;
-            border : 1px solid yellow;' 
-            src = '../includes/img/yes.png'/>
-            <img style='width : 5%;
-            height : 5%;
-            float : right;
-            top : 0px;
-            right : 5%;
-            margin-top : 1%;
-            display : inline-block;
-            border : 1px solid red;'
-            src='../includes/img/delete.png'/>
-            </div>
-            </li>";
-          } 
-          else 
-          { 
-            continue; 
-          }	
-        } 
-        $html .="</ul>" ; 
-        echo $html;
-      ?>--></ul>
+  </ul>
     </div>
+  </div>
+  <div id="popUp" class="pop">
+    <span class="close"><img src="../includes/img/close.png" width = "50px" height="50px"></span>
+    <img class="popup-image" id="img01">
   </div>
 <?php
   require_once 'footer.php';

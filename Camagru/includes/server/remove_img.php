@@ -1,6 +1,10 @@
 <?php
     include_once '../../config/setup.php';
     session_start();
+    if (!isset($_SESSION['user_id']))
+    {
+       header('location: ../../index.php');
+    }
     if (isset($_POST['remove']))
     {
         $name = $_POST['image'];

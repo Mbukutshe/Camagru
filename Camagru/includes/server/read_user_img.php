@@ -1,6 +1,12 @@
 <?php
     session_start();
-    if(isset($_POST['read']))
+    include_once '../../config/setup.php';
+    include_once '../declarations/constants.php';
+    if (!isset($_SESSION['user_id']))
+    {
+       header('location: ../../index.php');
+    }
+    else if(isset($_POST['read']))
     {
         $img_dir = "../uploads/";
         $array = [];
@@ -20,7 +26,7 @@
             { 
                 continue; 
             }	
-        } 
+        }
         echo json_encode($array);
     }
 ?>

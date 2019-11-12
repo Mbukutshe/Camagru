@@ -1,6 +1,10 @@
 <?php
 include_once '../../config/setup.php';
 session_start();
+if (!isset($_SESSION['user_id']))
+{
+   header('location: ../../index.php');
+}
 $filteredData = str_replace("data:image/png;base64,", "", $_POST['name-img']);
 $filteredData = str_replace(" ", "+", $filteredData);
 $unencodedData=base64_decode($filteredData);
@@ -13,7 +17,7 @@ function super_impose($src,$dest,$added)
     $superpose= imagecreatefrompng($added);
     list($width, $height) = getimagesize($src);
     list($width_small, $height_small) = getimagesize($added);
-    imagecopyresampled($base , $superpose,  20, 20, 0, 0, 100, 100,$width_small, $height_small);
+    imagecopyresampled($base , $superpose,  0, 0, 0, 0, 100, 100,$width_small, $height_small);
     imagepng($base , $dest);
 }
 super_impose("../uploads/".$name,"../uploads/".$name,"../img/".$_POST['image']);

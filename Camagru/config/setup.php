@@ -41,7 +41,7 @@
 		$sql = "CREATE TABLE IF NOT EXISTS comments
 				(
 					comment_id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-					comment VARCHAR(20) NOT NULL,
+					comment VARCHAR(1000) NOT NULL,
 					image_id INT(11) NOT NULL,
 					id INT(11) NOT NULL,
 					FOREIGN KEY(image_id) REFERENCES images(image_id),

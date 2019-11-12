@@ -1,3 +1,7 @@
+const modal = document.querySelector("#popUp");
+const modalImg = document.querySelector("#img01");
+const span = document.getElementsByClassName("close")[0];
+const displayMessage = document.getElementById('sticker-selection');
 const width = 240;
 const height = 340;
 let   zIndex = 1;
@@ -12,7 +16,10 @@ catch(Exception)
 {
   console.log(Exception);
 }
-
+span.onclick = function() 
+{ 
+  modal.style.display = "none";
+}
 imagePicker.addEventListener('change', (event)=>{
    var reader = new FileReader;
    reader.addEventListener('load', (event)=>{
@@ -65,8 +72,8 @@ function styleCanvas(cElement)
 }
 function styleImg(cElement, src)
 {
-  cElement.width = 200;
-  cElement.height = 120;
+  cElement.style.width = '100%';
+  cElement.height = 220;
   cElement.style.zIndex = 10;
   cElement.style.display = 'inline-block';
   cElement.style.float = 'left';
@@ -82,6 +89,7 @@ function styleCanvasDiv(div)
   div.style.display = 'inline-block';
   div.style.zIndex = 10;
   div.style.paddingRight = '2%';
+  div.style.padding = '5px';
   div.style.border = '1px solid #f5f7f6';
   div.style.borderRadius = '5px';
   div.style.marginTop = '1%';
@@ -94,7 +102,6 @@ function styleCanvasRemove(img)
 {
   img.width = 15;
   img.height = 15;
-  img.style.float = 'right';
   img.style.top = '0';
   img.style.right = '5%';
   img.style.marginTop = '1%';
@@ -152,6 +159,19 @@ function loadImages(data)
         readPhp();
       });
       cElement  = styleImg(cElement , "../includes/uploads/"+images);
+      cElement.onclick = function()
+      {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+      }
+      cElement.addEventListener('mouseover', (event)=>
+      {
+        document.body.style.cursor = 'pointer';
+      });
+      cElement.addEventListener('mouseout', (event)=>
+      {
+        document.body.style.cursor = 'default';
+      });
       div.appendChild(cElement);
       div.appendChild(img);
       li.appendChild(div);
@@ -170,19 +190,47 @@ function loadImages(data)
 captureButton.addEventListener('click', (event) => {
     const canvasElement = document.querySelector('#canvas');
     const context = canvasElement.getContext('2d');
-    context.drawImage(previewImage, 0, 0, 120, 120);
-    context.drawImage(videoPlayer, 0, 0, 120, 120);
+    context.drawImage(previewImage, 0, 0, 320, 240);
+    context.drawImage(videoPlayer, 0, 0, 340, 240);
     var name = superposable.src;
     var superpose = name.replace(/^.*[\\\/]/, '');
-    runPhp("../includes/server/over_lay.php", "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose);
+    alert(superpose);
+    if (superpose && !isCanvasBlank(canvasElement))
+    {
+      runPhp("../includes/server/over_lay.php", "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose);
+    }
+    else
+    {
+      if (!superpose)
+      {
+        displayMessage.innerHTML = "OOps!!! Sticker isn't clicked. Please choose the one you like.";
+        displayMessage.style.color = 'red';
+      }
+      else if(isCanvasBlank(canvasElement))
+      {
+        displayMessage.innerHTML = "Please choose the image from your PC or <br/> Don't you want to use the PC camera? You should smile then.";
+        displayMessage.style.color = 'red';
+      }
+    }
   });
+function isCanvasBlank(canvas) 
+{
+  const blank = document.createElement('canvas');
+
+  blank.width = canvas.width;
+  blank.height = canvas.height;
+
+  return canvas.toDataURL() === blank.toDataURL();
+}
 function successPhp(script, param)
 {
   var http = new XMLHttpRequest();
   http.onreadystatechange = function()
   {
-    if (http.readyState === 4) { 
-        if (http.status === 200) {
+    if (http.readyState === 4) 
+    { 
+        if (http.status === 200) 
+        {
         }
     }
   };
