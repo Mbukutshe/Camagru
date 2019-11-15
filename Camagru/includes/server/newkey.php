@@ -32,12 +32,15 @@
                 $pass = hash('md5', $pass, FALSE);
                 $sql = "UPDATE users SET user_key = ? WHERE email = ? AND confirmation_code = ?";
                 $res  = $obj->prepare($sql);
-                $res ->bindParam(1, $pass);
-                $res ->bindParam(2, $email);
-                $res ->bindParam(3, $code);
-                $res ->execute();
+                $res->bindParam(1, $pass);
+                $res->bindParam(2, $email);
+                $res->bindParam(3, $code);
+                $res->execute();
                 if ($res->rowCount())
                 {
+                    session_start();
+                    session_unset();
+                    session_destroy();
                     header('location: ../../views/login.php');
                 }
                 else

@@ -84,6 +84,7 @@ img#image
 #image-picker
 {
     bottom: 0px;
+    display: inline-block;
 }
 .superposable
 {
@@ -280,7 +281,7 @@ li.nav-item{
 }
 #pick-image
 {
-    display : none;
+    display : 'inline-block';
 }
 .jumbotron
 {

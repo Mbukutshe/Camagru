@@ -32,7 +32,6 @@ sendComment.addEventListener('click', (event)=>
     //var hiddenId = document.querySelector('#image_id');
     var imageId = hiddenValue;
     comment = commentText.value;
-    alert(imageId);
     if (userId.value && commentText.value)
     {
         var param = "insert_comments=yes&img_id="+imageId+"&user_id="+userId.value+"&comment="+comment;
@@ -100,7 +99,7 @@ function ft_styleLikeDiv(div)
     div.style.border = '1px solid #f5f7f6';
     div.style.bottom = '0px';
     div.style.marginTop = '20px';
-    div.style.textAlign = 'center';
+  //  div.style.textAlign = 'center';
     div.style.float = 'left';
     return div;
 }
@@ -122,7 +121,7 @@ function ft_styleImgLike(img)
 {
     img.width = 20;
     img.height = 20;
-    img.style.display = 'block';
+    img.style.display = 'inline-block';
     img.style.margin = '0 auto';
     img.style.bottom = '0';
     return img;
@@ -190,7 +189,7 @@ function removeComments()
     }
 
 }
-function ft_createGalleryList(image, id)
+function ft_createGalleryList(image, id, likeValue)
 {
   var galleryList = document.getElementById('gallery-list');
   var hiddenId = document.createElement('input');
@@ -202,12 +201,17 @@ function ft_createGalleryList(image, id)
   var galleryImg = document.createElement('img');
   var likeDiv = document.createElement('div');
   var comDiv = document.createElement('div');
-  var likes = document.createElement('p');
-  likes.value = "12";
+  var likes = document.createElement('label');
+  likes.innerHTML = likeValue;
   likes.style.fontSize = '12px';
-  likes.width = 20;
-  likes.height = 20;
+  likes.style.width = '20px';
+  likes.style.height = '20px';
   likes.style.color = 'black';
+  likes.style.float = 'left';
+  likes.style.padding = "5px";
+  likes.style.display = 'inline-block';
+  likes.style.margin = '0 auto';
+
   var likeImg = document.createElement('img');
   var commImg = document.createElement('img');
   var li = document.createElement('li');
@@ -222,6 +226,8 @@ function ft_createGalleryList(image, id)
     {
         var param = "like=yes&img_id="+imageId+"&user_id="+userId.value;
         likeImage(param);
+        var like = likes.value + 1;
+        likes.innerHTML = like;
     }
     else
     {
@@ -243,7 +249,6 @@ function ft_createGalleryList(image, id)
   });
   parentDiv.addEventListener('mouseover', (event)=>
   {
-  //  document.body.style.cursor = 'pointer';
     parentDiv.style.boxShadow = '1px 1px 10px 10px darkgrey';
   });
   parentDiv.addEventListener('mouseout', (event)=>
@@ -262,8 +267,8 @@ function ft_createGalleryList(image, id)
   li.setAttribute('class', 'nav-item');
   likeImg.setAttribute('src', '../includes/img/like.png');
   likeImg.setAttribute('class', 'button');
-  likeDiv.appendChild(likeImg);
   likeDiv.appendChild(likes);
+  likeDiv.appendChild(likeImg);
   commImg = ft_styleImgCom(commImg);
   commImg.setAttribute('src', '../includes/img/comment.png');
   comDiv.appendChild(commImg);
@@ -346,6 +351,7 @@ function changePage(page)
         galleryList.removeChild(galleryList.firstChild);
     var allImages = new Array();
     var idImages = new Array();
+    var imageLikes = new Array();
     var http = new XMLHttpRequest();
     var param = "gallery=yes";
     http.onreadystatechange = function()
@@ -361,11 +367,12 @@ function changePage(page)
                     {
                         allImages[j] = element['image_name'];
                         idImages[j] = element['image_id'];
+                        imageLikes[j] = element['like_no'];
                         j++;
                     });
                     for (var i = (page-1) * records_per_page; i < (page * records_per_page) && i < allImages.length; i++) 
                     {
-                        ft_createGalleryList(allImages[i], idImages[i]);
+                        ft_createGalleryList(allImages[i], idImages[i], imageLikes[i]);
                     }
                 }
             }
@@ -420,10 +427,12 @@ function likeImage(param)
             {
                 if (http.responseText == "success")
                 {
-
+                    alert("Just liked.");
                 }
-                else
-                    alert("Fuck Off");
+                else if (http.responseText == "liked")
+                {
+                    alert("Already liked this image.");
+                }
             }
         }
     };

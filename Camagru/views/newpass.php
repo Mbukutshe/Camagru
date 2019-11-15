@@ -35,11 +35,11 @@
     ?> 
     <div  class="form-group">
        <label class="label-text label-color"></label>
-        <input type="password" class="form-control" name = "pass" placeholder="new password..."/>
+        <input type="password" class="form-control" name = "pass" placeholder="new password..." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
     </div>
     <div  class="form-group">
         <label class = "label-text label-color"></label>
-        <input type="password" class="form-control" name = "cpass" placeholder="confirm password..."/>
+        <input type="password" class="form-control" name = "cpass" placeholder="confirm password..." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
     </div>
     <div class="form-group">
         <button  type="submit" class="btn-success" name="login">create</button><br/>

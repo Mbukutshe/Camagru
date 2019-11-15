@@ -1,5 +1,10 @@
 <?php
     include_once '../../config/setup.php';
+    session_start();
+    if (!isset($_SESSION['user_id']))
+    {
+       header('location: ../index.php');
+    }
     if (isset($_POST['login']))
     {
         $user = trim($_POST['user']);
@@ -23,7 +28,6 @@
                 $res->execute();
                 if ($res->rowCount())
                 {
-                    session_start();
                     header("location: ../../views/home.php");
                     $res->setFetchMode(PDO::FETCH_ASSOC);
                     $row = $res->fetch();

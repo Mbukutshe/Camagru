@@ -24,18 +24,23 @@
                 {
                     $change = 'NO';
                 }
+                $user_id = $_SESSION['user_id'];
                 $sql = "UPDATE users SET receive_notifications = ? WHERE id = ?";
                 $res = $obj->prepare($sql);
                 $res->bindParam(1, $change);
-                $res->bindParam(2, $_SESSION['user_id']);
+                $res->bindParam(2, $user_id);
                 $res->execute();
                 if ($res->rowCount())
                 {
+                    $_SESSION['pref'] = "YES";
+                    echo '<script type = "text/javascript">
+                        pref = "'.$_SESSION['pref'].'";
+                    </script>';
                     header('location: ../../views/dashboard.php?err=success');
                 }
                 else
                 {
-                    header('location: ../../views/dashboard.php?err=error');
+                    header('location: ../../views/dashboard.php?err=error&er='.$change);
                 }
             }
             catch(PDOException $ex)
@@ -44,4 +49,5 @@
             }
         }
     }
+    $obj = null;
 ?>

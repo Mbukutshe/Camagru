@@ -7,6 +7,7 @@ const height = 340;
 let   zIndex = 1;
 try
 {
+icon1.addEventListener('click', (event)=>{ft_display('null');});
 icon2.addEventListener('click', (event)=>{ft_display('../includes/img/grass.png');});
 icon4.addEventListener('click', (event)=>{ft_display('../includes/img/sticker3.png');});
 icon5.addEventListener('click', (event)=>{ft_display('../includes/img/tree.png');});
@@ -194,19 +195,13 @@ captureButton.addEventListener('click', (event) => {
     context.drawImage(videoPlayer, 0, 0, 340, 240);
     var name = superposable.src;
     var superpose = name.replace(/^.*[\\\/]/, '');
-    alert(superpose);
     if (superpose && !isCanvasBlank(canvasElement))
     {
       runPhp("../includes/server/over_lay.php", "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose);
     }
     else
     {
-      if (!superpose)
-      {
-        displayMessage.innerHTML = "OOps!!! Sticker isn't clicked. Please choose the one you like.";
-        displayMessage.style.color = 'red';
-      }
-      else if(isCanvasBlank(canvasElement))
+      if(isCanvasBlank(canvasElement))
       {
         displayMessage.innerHTML = "Please choose the image from your PC or <br/> Don't you want to use the PC camera? You should smile then.";
         displayMessage.style.color = 'red';
@@ -269,7 +264,7 @@ function readPhp()
  http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
  http.send(param);
 }
-window.addEventListener("load", (event) => 
+window.addEventListener("load", (event) =>
 {
   startMedia();
   readPhp();

@@ -3,6 +3,7 @@ const captureButton = document.querySelector('#capture-btn');
 const imagePicker = document.querySelector('#image-picker');
 const imagePickerArea = document.querySelector('#pick-image');
 const newImages = document.querySelector('#newImages');
+const icon1 = document.querySelector('#icon1');
 const icon2 = document.querySelector('#icon2');
 const icon4 = document.querySelector('#icon4');
 const icon5 = document.querySelector('#icon5');

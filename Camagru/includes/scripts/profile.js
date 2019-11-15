@@ -4,14 +4,6 @@ const formUpdate = document.getElementById('update-form');
 const saveChanges = document.getElementById('changes');
 var   checkState = check.checked;
 var   isSet = 1;
-check.setAttribute('class', 'form-control');
-check.style.width = '100px';
-check.style.cssFloat = 'right';
-check.style.marginTop = '0';
-check.style.color = 'green';
-check.checked = true;
-check.style.display = 'none';
-notLabel.style.display = 'none';
 check.addEventListener('change', (event)=>
 {
     checkState = check.checked;
@@ -176,6 +168,11 @@ window.addEventListener('load', (event)=>
                 textLabel.innerHTML = "Type the new email address:";
                 check.style.display = 'none';
                 notLabel.style.display = 'none';
+                $link = "http://localhost:8080/camagru/includes/server/newpass.php?id=$email&uni_code=$code";
+                mail($email, $reset_subj, $link, $sender);
+                session_start();
+                session_unset();
+                session_destroy();
             });
         }
         else if (i == 3)
@@ -197,7 +194,7 @@ window.addEventListener('load', (event)=>
             });
             change.addEventListener('click', (event)=>
             {
-                window.open('../views/newpass.php', '_top');
+                window.open('../views/reset.php', '_top');
             });
         }
         else if (i == 4)
@@ -247,5 +244,18 @@ window.addEventListener('load', (event)=>
                 window.open('../views/editor.php', '_top');
             });
         }
+    }
+    check.setAttribute('class', 'form-control');
+    check.style.width = '100px';
+    check.style.cssFloat = 'right';
+    check.style.marginTop = '0';
+    check.style.color = 'green';
+    check.style.display = 'none';
+    notLabel.style.display = 'none';
+    if (pref == "NO")
+        check.checked = false;
+    else if (pref == "YES")
+    {
+        check.checked = 'true';
     }
 });

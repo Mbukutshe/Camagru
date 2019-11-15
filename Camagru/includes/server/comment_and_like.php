@@ -83,29 +83,49 @@
             $stmt->execute();
             if ($stmt->rowCount())
             {
-                $res = $stmt->fetch();
-                $like_no = $res['like_no'] + 1;
-                $like_id = $res['like_id'];
-                $user_id = $res['id']; 
-                $sql = "UPDATE likes SET like_no = ? WHERE like_id = ?";
-                $stmt = $obj->prepare($sql);
-                $stmt->bindParam(1, $like_no);
-                $stmt->bindParam(2, $like_id);
-                $stmt->execute();
-                if ($stmt->rowCount())
+                $user_id = $_POST['user_id'];
+                $sql = "SELECT * FROM liked WHERE image_id = ? AND id = ?";
+                $stm = $obj->prepare($sql);
+                $stm->bindParam(1, $img_id);
+                $stm->bindParam(2, $user_id);
+                $stm->execute();
+                if (!$stm->rowCount())
                 {
-                    $notify = "YES";
-                    $sql = "SELECT * FROM users WHERE id = ? AND receive_notifications = ?";
+                    $res = $stmt->fetch();
+                    $like_no = $res['like_no'] + 1;
+                    $like_id = $res['like_id'];
+                    $user_id = $res['id'];
+                    $sql = "UPDATE likes SET like_no = ? WHERE like_id = ?";
                     $stmt = $obj->prepare($sql);
-                    $stmt->bindParam(1, $user_id);
-                    $stmt->bindParam(2, $notify);
+                    $stmt->bindParam(1, $like_no);
+                    $stmt->bindParam(2, $like_id);
+                    $stmt->execute();
+
+                    $user_id = $_POST['user_id'];
+                    $sql = "INSERT INTO liked (image_id, id) VALUES (?, ?)";
+                    $stmt = $obj->prepare($sql);
+                    $stmt->bindParam(1, $img_id);
+                    $stmt->bindParam(2, $user_id);
                     $stmt->execute();
                     if ($stmt->rowCount())
                     {
-                        $body = "Someone just liked your picture.";
-                        mail($_SESSION['user_email'], "Picture Liked", $body, $sender);
+                        $notify = "YES";
+                        $sql = "SELECT * FROM users WHERE id = ? AND receive_notifications = ?";
+                        $stmt = $obj->prepare($sql);
+                        $stmt->bindParam(1, $user_id);
+                        $stmt->bindParam(2, $notify);
+                        $stmt->execute();
+                        if ($stmt->rowCount())
+                        {
+                            $body = "Someone just liked your picture.";
+                            mail($_SESSION['user_email'], "Picture Liked", $body, $sender);
+                        }
+                        echo "success";
                     }
-                    echo "success";
+                }
+                else
+                {
+                    echo "liked";
                 }
             }
         }

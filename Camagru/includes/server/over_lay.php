@@ -33,7 +33,16 @@ try
     $res->execute();
     if ($res->rowCount())
     {
-
+        $sql = "SELECT image_id FROM images ORDER BY image_id DESC LIMIT 1";
+        $res = $obj->prepare($sql);
+        $res->execute();
+        $res = $res->fetch();
+        $image_id = $res['image_id'];
+        $sql = "INSERT INTO likes (image_id, id) VALUES(?, ?)";
+        $res = $obj->prepare($sql);
+        $res->bindParam(1, $image_id);
+        $res->bindParam(2, $id);
+        $res->execute();
     }
     $array = [];
     $images = scandir($img_dir);

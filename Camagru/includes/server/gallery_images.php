@@ -7,13 +7,14 @@
         $images = scandir($img_dir);
         try
         {
-            $sql = "SELECT image_name,image_id FROM images ORDER BY upload_date DESC";
+            $sql = $sql = "SELECT image_name,images.image_id, ali.like_no FROM images INNER JOIN likes as ali WHERE ali.image_id = images.image_id ORDER BY images.image_id DESC";
             $stmt = $obj->prepare($sql);
             $stmt->bindParam(1, $img_id);
             $stmt->execute();
+            
             if ($stmt->rowCount())
             {
-                while($img = $stmt->fetch()) 	
+                while($img = $stmt->fetch())
                 { 
                     if($img['image_name'] === '.' || $img['image_name'] === '..') 
                     {

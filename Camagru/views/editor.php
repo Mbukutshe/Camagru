@@ -10,6 +10,7 @@
     <div class = "superposable">
       <label class = "head-sections">Stickers</label>
       <ul class = "side-ul">
+      <li class="side-li" id = "icon1"><img width="50" height="50"/></li>
         <li class="side-li" id = "icon2"><img src="../includes/img/grass.png" width="50" height="50"/></li>
         <li class="side-li" id = "icon4"><img src="../includes/img/sticker3.png" width="50" height="50"/></li>
         <li class="side-li" id = "icon5"><img src="../includes/img/tree.png" width="50" height="50"/></li>
@@ -34,7 +35,7 @@
         </div>
         <div id="pick-image">
           <div>
-            <label id = "sticker-selection">Camera is not supported or is blocked. Check the camera settings or Pick an Image instead</label>
+            <label id = "sticker-selection"></label>
           </div>
           <input type="file" accept="image/*" class= "button" id="image-picker"/>
         </div>
@@ -44,9 +45,9 @@
   <div class = "side-section">
   <label class = "head-sections">My Pictures</label>
    <div class="captured-pic">
-   <ul id = 'taken-pics'>
-  </ul>
-    </div>
+    <ul id = 'taken-pics'>
+    </ul>
+   </div>
   </div>
   <div id="popUp" class="pop">
     <span class="close"><img src="../includes/img/close.png" width = "50px" height="50px"></span>

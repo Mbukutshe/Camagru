@@ -6,7 +6,7 @@
 }
 #popUp:hover 
 {
-    opacity: 0.9;
+    opacity: 1;
 }
 .close {
     position: absolute;

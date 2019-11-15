@@ -29,6 +29,14 @@
             {
                 try
                 {
+                 /*   $code = hash('md5', rand(10,100000), false);
+                    $confirm = 'YES';
+                    $sql = "UPDATE users SET confirmation_code = ? WHERE email = ? AND account_confirmed = ?";
+                    $stm = $obj->prepare($sql);
+                    $stm->bindParam(1, $code);
+                    $stm->bindParam(2, $email);
+                    $stm->bindParam(3, $confirm);
+                    $stm->execute();*/
                     $sql = "UPDATE users SET email = ? WHERE id = ?";
                     $res = $obj->prepare($sql);
                     $res->bindParam(1, $email);

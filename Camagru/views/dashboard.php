@@ -1,7 +1,6 @@
 <?php
  require_once 'nav.php';
  include_once '../config/setup.php';
- session_start();
  if (!isset($_SESSION['user_id']))
  {
     header('location: ../index.php');
@@ -16,6 +15,9 @@
         }
         else if ($_GET['err'] == 'success')
         {
+            echo '<script type = "text/javascript">
+                    pref = "'.$_SESSION['pref'].'";
+                </script>';
             echo '<label class="message-green">Check the email to confirm changes.</label>';
         }
         else if ($_GET['err'] == 'error')
@@ -64,6 +66,7 @@
     <script type='text/javascript'>
         var userName = "<?php if (isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}?>";
         var emailAddress = "<?php if (isset($_SESSION['user_email'])){echo $_SESSION['user_email'];}?>";
+        var pref = "<?php if (isset($_SESSION['pref'])){echo $_SESSION['pref'];}?>";
     </script>
 <?php
     require_once 'footer.php';

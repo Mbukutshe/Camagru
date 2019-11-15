@@ -37,12 +37,12 @@
             <input type="email" class="form-control" name = "email" placeholder="email address..."/>
         </div>
         <div  class="form-group">
-            <label class = "label-text label-color"></label>
-            <input type="password" class="form-control" name = "pass1" placeholder="password..."/>
+            <label class = "label-text label-color"></label> 
+            <input type="password" class="form-control" name = "pass1" placeholder="password..." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
         </div>
         <div  class="form-group">
             <label class = "label-text label-color"></label>
-            <input type="password" class="form-control" name = "pass2" placeholder="confirm password..."/>
+            <input type="password" class="form-control" name = "pass2" placeholder="confirm password..."pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
         </div>
         <div class="form-group">
             <button  type="submit" class="btn-success" name="signup">Create</button>

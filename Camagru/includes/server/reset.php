@@ -1,6 +1,7 @@
 <?php
     include_once '../../config/setup.php';
     include_once '../declarations/constants.php';
+
     if (isset($_POST['reset']))
     {
         $email = trim($_POST['user']);
@@ -42,6 +43,9 @@
                         {
                             $link = "http://localhost:8080/camagru/includes/server/newpass.php?id=$email&uni_code=$code";
                             mail($email, $reset_subj, $link, $sender);
+                            session_start();
+                            session_unset();
+                            session_destroy();
                             header('location: ../../views/reset.php?err=success');
                         }
                         else

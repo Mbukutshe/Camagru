@@ -61,6 +61,17 @@
 					FOREIGN KEY(id) REFERENCES users(id)
 				)";
 		$obj->exec($sql);
+		$obj = new PDO($MYSQL, $DB_USER, $DB_PASSWORD);
+		$obj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "CREATE TABLE IF NOT EXISTS liked
+				(
+					liked_id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+					image_id INT(11) NOT NULL,
+					id INT(11) NOT NULL,
+					FOREIGN KEY(image_id) REFERENCES images(image_id),
+					FOREIGN KEY(id) REFERENCES users(id)
+				)";
+		$obj->exec($sql);
 	}
 	catch(PDOException $ex)
 	{
