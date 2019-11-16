@@ -37,7 +37,7 @@
                 <div class = "comment-input">
                     <input type="text" id = "insert-comment" class="formc-control" name = "text-comment" placeholder="say something..."/>
                     <button  type="submit" id="send-comment" class="btn-send" name="login">send</button><br/>
-                    <span id = "warning"><label>sign in first before commenting to this image.<label></span>
+                    <span id = "warning"><label>sign in first before commenting.<label></span>
                 </div>
             </div>
         </div>

@@ -7,8 +7,8 @@
     }
     if (isset($_POST['login']))
     {
-        $user = trim($_POST['user']);
-        $f_pass = trim($_POST['pass']);
+        $user = htmlspecialchars(trim($_POST['user']));
+        $f_pass = htmlspecialchars(trim($_POST['pass']));
         if (empty($user)||empty($f_pass))
         {
             header('location: ../../views/login.php?err=empty');

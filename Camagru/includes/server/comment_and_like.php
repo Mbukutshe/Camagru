@@ -30,7 +30,7 @@
     {
         try
         {
-            $comment = trim($_POST['comment']); 
+            $comment = htmlspecialchars(trim($_POST['comment'])); 
             $img_id = trim($_POST['img_id']);
             $user_id = trim($_POST['user_id']); 
             $sql = "INSERT INTO comments(comment, image_id, id) VALUES (?, ?, ?)";

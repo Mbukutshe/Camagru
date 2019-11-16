@@ -7,7 +7,7 @@
         $images = scandir($img_dir);
         try
         {
-            $sql = $sql = "SELECT image_name,images.image_id, ali.like_no FROM images INNER JOIN likes as ali WHERE ali.image_id = images.image_id ORDER BY images.image_id DESC";
+            $sql = $sql = "SELECT image_name,images.image_id, ali.like_no FROM images INNER JOIN likes as ali WHERE ali.image_id = images.image_id ORDER BY images.upload_date DESC";
             $stmt = $obj->prepare($sql);
             $stmt->bindParam(1, $img_id);
             $stmt->execute();

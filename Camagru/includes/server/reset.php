@@ -4,7 +4,7 @@
 
     if (isset($_POST['reset']))
     {
-        $email = trim($_POST['user']);
+        $email = htmlspecialchars(trim($_POST['user']));
 
         if (empty($email))
         {

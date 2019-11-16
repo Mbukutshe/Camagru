@@ -4,6 +4,7 @@ const formUpdate = document.getElementById('update-form');
 const saveChanges = document.getElementById('changes');
 var   checkState = check.checked;
 var   isSet = 1;
+
 check.addEventListener('change', (event)=>
 {
     checkState = check.checked;
@@ -16,6 +17,7 @@ check.addEventListener('change', (event)=>
     document.body.appendChild(form);
     form.submit();
 });
+
 saveChanges.addEventListener('click', (event)=>
 {
     const textUpd = document.getElementById('text-upd');
@@ -31,6 +33,7 @@ saveChanges.addEventListener('click', (event)=>
         hidName.value = textUpd.value;
     }
 });
+
 function createHiddenBox(textBox, name, value, id)
 {
     textBox.id = id;
@@ -39,6 +42,7 @@ function createHiddenBox(textBox, name, value, id)
     textBox.value = value;
     return textBox;
 }
+
 function ft_createIconDiv(div)
 {
     div.width = 20;
@@ -53,6 +57,7 @@ function ft_createIconDiv(div)
     div.style.boxShadow = '0px 5px 4px 0px darkgrey';
     return div;
 }
+
 function ft_styleDashIcon(img)
 {
   img.width = 100;
@@ -101,6 +106,7 @@ function ft_createDash(img, div, btn, ediDiv, opt)
     dash.appendChild(editDiv);
     dash.appendChild(iconDiv);
 }
+
 window.addEventListener('load', (event)=>
 {
     i = 0;
@@ -117,16 +123,19 @@ window.addEventListener('load', (event)=>
             textBox = createHiddenBox(textBox, 'name', userName, 'name-text');
             formUpdate.appendChild(textBox);
             img.setAttribute('src', '../includes/img/user.png');
+
             img.addEventListener('mouseover', (event)=>
             {
                 change.style.display = 'inline-block';
                 document.body.style.cursor = 'pointer';
             });
+
             img.addEventListener('mouseout', (event)=>
             {
                 change.style.display = 'none';
                 document.body.style.cursor = 'default';
             });
+
             change.addEventListener('click', (event)=>
             {
                 saveChanges.style.display = 'block';
@@ -149,16 +158,19 @@ window.addEventListener('load', (event)=>
             textBox = createHiddenBox(textBox, 'email', emailAddress, 'email-text');
             formUpdate.appendChild(textBox);
             img.src = '../includes/img/email.png';
+
             img.addEventListener('mouseover', (event)=>
             {
                 change.style.display = 'inline-block';
                 document.body.style.cursor = 'pointer';
             });
+            
             img.addEventListener('mouseout', (event)=>
             {
                 change.style.display = 'none';
                 document.body.style.cursor = 'default';
             });
+
             change.addEventListener('click', (event)=>
             {
                 saveChanges.style.display = 'block';
@@ -168,8 +180,8 @@ window.addEventListener('load', (event)=>
                 textLabel.innerHTML = "Type the new email address:";
                 check.style.display = 'none';
                 notLabel.style.display = 'none';
-                $link = "http://localhost:8080/camagru/includes/server/newpass.php?id=$email&uni_code=$code";
-                mail($email, $reset_subj, $link, $sender);
+              /*  $link = "http://localhost:8080/camagru/includes/server/newpass.php?id=$email&uni_code=$code";
+                mail($email, $reset_subj, $link, $sender);*/
                 session_start();
                 session_unset();
                 session_destroy();
@@ -182,16 +194,19 @@ window.addEventListener('load', (event)=>
             const change = document.getElementById('edi3');
             var textUpd = document.getElementById('text-upd');
             img.src = '../includes/img/key.png';
+
             img.addEventListener('mouseover', (event)=>
             {
                 change.style.display = 'inline-block';
                 document.body.style.cursor = 'pointer';
             });
+
             img.addEventListener('mouseout', (event)=>
             {
                 change.style.display = 'none';
                 document.body.style.cursor = 'default';
             });
+
             change.addEventListener('click', (event)=>
             {
                 window.open('../views/reset.php', '_top');
@@ -204,16 +219,19 @@ window.addEventListener('load', (event)=>
             const change = document.getElementById('edi4');
             var textUpd = document.getElementById('text-upd');
             img.src = '../includes/img/notify.png';
+
             img.addEventListener('mouseover', (event)=>
             {
                 change.style.display = 'inline-block';
                 document.body.style.cursor = 'pointer';
             });
+
             img.addEventListener('mouseout', (event)=>
             {
                 change.style.display = 'none';
                 document.body.style.cursor = 'default';
             });
+
             change.addEventListener('click', (event)=>
             {
                 check.style.display = 'inline-block';
@@ -229,16 +247,19 @@ window.addEventListener('load', (event)=>
             var img = document.getElementById('img5');
             const change = document.getElementById('edi5');
             img.src = '../includes/img/camera.png';
+
             img.addEventListener('mouseover', (event)=>
             {
                 change.style.display = 'inline-block';
                 document.body.style.cursor = 'pointer';
             });
+
             img.addEventListener('mouseout', (event)=>
             {
                 change.style.display = 'none';
                 document.body.style.cursor = 'default';
             });
+            
             change.addEventListener('click', (event)=>
             {
                 window.open('../views/editor.php', '_top');

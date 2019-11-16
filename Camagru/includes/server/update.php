@@ -7,11 +7,11 @@
     }
     if (isset($_POST['upd']))
     {
-        $name = trim($_SESSION['user_name']);
-        $mail = trim($_SESSION['user_email']);
+        $name = htmlspecialchars(trim($_SESSION['user_name']));
+        $mail = htmlspecialchars(trim($_SESSION['user_email']));
 
-        $username = trim($_POST['name']);
-        $email = trim($_POST['email']);
+        $username = htmlspecialchars(trim($_POST['name']));
+        $email = htmlspecialchars(trim($_POST['email']));
 
         if (empty($name) || empty($username) || empty($mail) || empty($email))
         {
@@ -29,14 +29,6 @@
             {
                 try
                 {
-                 /*   $code = hash('md5', rand(10,100000), false);
-                    $confirm = 'YES';
-                    $sql = "UPDATE users SET confirmation_code = ? WHERE email = ? AND account_confirmed = ?";
-                    $stm = $obj->prepare($sql);
-                    $stm->bindParam(1, $code);
-                    $stm->bindParam(2, $email);
-                    $stm->bindParam(3, $confirm);
-                    $stm->execute();*/
                     $sql = "UPDATE users SET email = ? WHERE id = ?";
                     $res = $obj->prepare($sql);
                     $res->bindParam(1, $email);
@@ -77,7 +69,7 @@
             }
             catch(PDOException $ex)
             {
-                echo "Error : ".$ex->getMessage();
+                header('location: ../../views/dashboard.php?err=error');
             }
         }
     }

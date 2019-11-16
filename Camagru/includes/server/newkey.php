@@ -2,10 +2,10 @@
     include_once('../../config/setup.php');
     if (isset($_POST['pass']) && isset($_POST['cpass']) && isset($_POST['id']) && isset($_POST['code']))
     {
-        $pass = trim($_POST['pass']);
-        $cpass = trim($_POST['cpass']);
-        $email = trim($_POST['id']);
-        $code = trim($_POST['code']);
+        $pass = htmlspecialchars(trim($_POST['pass']));
+        $cpass = htmlspecialchars(trim($_POST['cpass']));
+        $email = htmlspecialchars(trim($_POST['id']));
+        $code = htmlspecialchars(trim($_POST['code']));
 
         if (empty($pass) || empty($cpass) || empty($email) || empty($code))
         {

@@ -17,11 +17,25 @@
         if (isset($_GET['err']))
         {
             if ($_GET['err'] == 'passmatch')
+            {
                 echo '<label class="message-color">Passwords doesn\'t match.</label>';
+            }
             else if ($_GET['err'] == 'empty')
+            {
                 echo '<label class="message-color">All fields are required.</label>';
+            }
             else if ($_GET['err'] == 'invamail')
+            {
                 echo '<label class="message-color">No such email.</label>';
+            }
+            else if ($_GET['err'] == 'exist')
+            {
+                echo '<label class="message-color">Username already exists.</label>';
+            }
+            else if ($_GET['err'] == 'mexist')
+            {
+                echo '<label class="message-color">E-mail Address already exists.</label>';
+            }
             else
             {
                 echo '<label class="message-color">Error occured. Retry again.</label>';

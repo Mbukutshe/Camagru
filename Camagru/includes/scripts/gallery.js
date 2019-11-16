@@ -14,12 +14,14 @@ var userId = document.querySelector('#user_id');
 const span = document.getElementsByClassName("close")[0];
 const close = document.getElementById("close");
 var hiddenValue;
+
 span.onclick = function() 
 { 
   modal.style.display = "none";
   commentBox.style.display = "none";
   removeComments();
 }
+
 close.addEventListener('click', (event)=>
 {
     modal.style.display = "none";
@@ -27,9 +29,9 @@ close.addEventListener('click', (event)=>
     warning.style.display = "none";
     removeComments();
 });
+
 sendComment.addEventListener('click', (event)=>
 {
-    //var hiddenId = document.querySelector('#image_id');
     var imageId = hiddenValue;
     comment = commentText.value;
     if (userId.value && commentText.value)
@@ -52,7 +54,7 @@ sendComment.addEventListener('click', (event)=>
     }
     commentText.value = "";
 });
-//style for gallery div item
+
 function ft_styleGalleryDiv(div)
 {
   div.width = 400;
@@ -67,7 +69,7 @@ function ft_styleGalleryDiv(div)
   div.style.boxShadow = '0px 8px 5px 0px darkgrey';
   return div;
 }
-//style for gallery image
+
 function ft_styleGalleryImg(img, image)
 {
   img.width = 300;
@@ -80,7 +82,7 @@ function ft_styleGalleryImg(img, image)
   img.src = image;
   return img;
 }
-//style for the div below an img
+
 function ft_styleBelowDiv(div)
 {
   div.style.width = 400;
@@ -90,7 +92,7 @@ function ft_styleBelowDiv(div)
   div.style.left = '0';
   return div;
 }
-//style for 'likes' div
+
 function ft_styleLikeDiv(div)
 {
     div.style.width = '140px';
@@ -99,11 +101,10 @@ function ft_styleLikeDiv(div)
     div.style.border = '1px solid #f5f7f6';
     div.style.bottom = '0px';
     div.style.marginTop = '20px';
-  //  div.style.textAlign = 'center';
     div.style.float = 'left';
     return div;
 }
-//style for 'comments' div
+
 function ft_styleComDiv(div)
 {
     div.style.width = '140px';
@@ -116,7 +117,7 @@ function ft_styleComDiv(div)
     div.style.textAlign = 'center';
     return div;
 }
-//style for img like and comments
+
 function ft_styleImgLike(img)
 {
     img.width = 20;
@@ -202,7 +203,10 @@ function ft_createGalleryList(image, id, likeValue)
   var likeDiv = document.createElement('div');
   var comDiv = document.createElement('div');
   var likes = document.createElement('label');
-  likes.innerHTML = likeValue;
+  if (parseInt(likeValue) > 0)
+  {
+    likes.innerHTML = likeValue;
+  }
   likes.style.fontSize = '12px';
   likes.style.width = '20px';
   likes.style.height = '20px';
@@ -225,9 +229,7 @@ function ft_createGalleryList(image, id, likeValue)
     if (userId.value)
     {
         var param = "like=yes&img_id="+imageId+"&user_id="+userId.value;
-        likeImage(param);
-        var like = likes.value + 1;
-        likes.innerHTML = like;
+        likeImage(param, likes);
     }
     else
     {
@@ -335,9 +337,7 @@ last_page.addEventListener('click', (event)=>
 });
 function changePage(page)
 {
-   // var page_span = document.getElementById("page");
     var galleryList = document.querySelector('#gallery-list');
-    // Validate page
     if (page < 1)
     {  
          page = 1;
@@ -381,7 +381,6 @@ function changePage(page)
     http.open('POST', "../includes/server/gallery_images.php", true);
     http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     http.send(param);
-  //  page_span.innerHTML = page;
 
     if (page == 1) 
     {
@@ -416,7 +415,7 @@ function loadData(data)
         });
     }
 }
-function likeImage(param)
+function likeImage(param, likes)
 {
     warning.style.display = "none";
     var http = new XMLHttpRequest();
@@ -427,7 +426,15 @@ function likeImage(param)
             {
                 if (http.responseText == "success")
                 {
-                    alert("Just liked.");
+                    if (!(likes.innerText))
+                    {
+                        likes.innerHTML = 1;
+                    }
+                    else
+                    {
+                        var like = 1 + parseInt(likes.innerText);
+                        likes.innerHTML = like;
+                    }
                 }
                 else if (http.responseText == "liked")
                 {
