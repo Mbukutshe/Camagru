@@ -36,7 +36,7 @@
                     $res->execute();
                     if ($res->rowCount())
                     {
-                        header('location: ../../views/dashboard.php?err=success');
+                        header('location: sign_out.php');
                     }
                     else
                     {
@@ -60,7 +60,7 @@
                 $res->execute();
                 if ($res->rowCount())
                 {
-                    header('location: ../../views/dashboard.php?err=success');
+                    header('location: sign_out.php');
                 }
                 else
                 {

@@ -317,21 +317,13 @@ btn_prev.addEventListener('click', (event)=>
 {
     prevPage();
 });
-first_page.addEventListener('click', (event)=> 
+first_page.addEventListener('click', (event)=>
 {
-    last_page.style.backgroundColor= '#fbfcf0';
-    last_page.style.color= '#000';
-    first_page.style.backgroundColor= '#4CAF50';
-    first_page.style.color= '#fff';
+    current_page = 1;
     changePage(1);
 });
 last_page.addEventListener('click', (event)=>
 {
-    first_page.style.backgroundColor= '#fbfcf0';
-    first_page.style.color= '#000';
-    last_page.style.borderRadius= '5px';
-    last_page.style.backgroundColor= '#4CAF50';
-    last_page.style.color= '#fff';
     current_page = Math.ceil(count/records_per_page);
     changePage(current_page);
 });
@@ -347,6 +339,7 @@ function changePage(page)
     {
         page = numPage;
     }
+    current_page = page;
     while(galleryList.firstChild)
         galleryList.removeChild(galleryList.firstChild);
     var allImages = new Array();
@@ -381,7 +374,16 @@ function changePage(page)
     http.open('POST', "../includes/server/gallery_images.php", true);
     http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     http.send(param);
-
+    if (Math.ceil(count/records_per_page) == 1)
+    {
+        first_page.style.visibility = "hidden";
+        last_page.style.visibility = "hidden";
+    }
+    else
+    {
+        first_page.style.visibility = "visible";
+        last_page.style.visibility = "visible";
+    }
     if (page == 1) 
     {
         btn_prev.style.visibility = "hidden";

@@ -19,7 +19,7 @@ catch(Exception)
   console.log(Exception);
 }
 
-span.onclick = function() 
+span.onclick = function()
 { 
   modal.style.display = "none";
 }
@@ -27,7 +27,10 @@ span.onclick = function()
 imagePicker.addEventListener('change', (event)=>{
    var reader = new FileReader;
    reader.addEventListener('load', (event)=>{
-      previewImage.src = reader.result; 
+      previewImage.src = reader.result;
+      videoPlayer.pause();
+      videoPlayer.src = null;
+      videoPlayer.srcObject.stop();
    });
    reader.readAsDataURL(imagePicker.files[0]);
 });
@@ -36,6 +39,7 @@ function ft_display(pic)
 {
   superposable.src = pic;
   superposable.style.display = 'inline-block';
+  previewImage.style.src = null;
 }
 
 const startMedia = () => 
@@ -157,8 +161,8 @@ function loadImages(data)
       {
         document.body.style.cursor = 'pointer';
         img.style.boxShadow = '1px 1px 6px 6px darkgrey';
-        img.width = 20;
-        img.height = 20;
+        img.width = 16;
+        img.height = 16;
       });
 
       img.addEventListener('mouseout', (event)=>
@@ -174,7 +178,6 @@ function loadImages(data)
         var fpath = cElement.src;
         var fname = fpath.replace(/^.*[\\\/]/, '');
         successPhp("../includes/server/remove_img.php", "remove=true&image="+fname);
-        readPhp();
       });
 
       cElement  = styleImg(cElement , "../includes/uploads/"+images);
@@ -214,11 +217,11 @@ captureButton.addEventListener('click', (event) =>
 {
   const canvasElement = document.querySelector('#canvas');
   const context = canvasElement.getContext('2d');
-  context.drawImage(previewImage, 0, 0, 320, 240);
   context.drawImage(videoPlayer, 0, 0, 340, 240);
+  context.drawImage(previewImage, 0, 0, 340, 240);
   var name = superposable.src;
   var superpose = name.replace(/^.*[\\\/]/, '');
-  if (superpose && !isCanvasBlank(canvasElement))
+  if (!isCanvasBlank(canvasElement))
   {
     runPhp("../includes/server/over_lay.php", "name-img="+canvasElement.toDataURL('image/png')+"&image="+superpose);
   }
@@ -251,6 +254,8 @@ function successPhp(script, param)
     { 
         if (http.status === 200) 
         {
+          alert(http.responseText);
+          readPhp();
         }
     }
   };

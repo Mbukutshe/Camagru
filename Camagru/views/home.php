@@ -8,16 +8,23 @@
     </div>
     <script type = "text/javascript">
         var count = "<?php 
+        try
+        {
             $sql = "SELECT * FROM images";
             $res = $obj->prepare($sql);
             $res->execute();
             if ($res->rowCount())
                 echo $res->rowCount();
+        }
+        catch(PDOException $ex)
+        {
+            echo "Error : ".$ex->getMessage();
+        }
         ?>";
     </script>
     <div class="pagination">
         <a href = "#" id = "btn_prev">&laquo;</a>
-        <a href="#" id = "first_page" class="active">First</a>
+        <a href="#" id = "first_page" >First</a>
         <a href="#" id = "last_page">Last</a>
         <a href = "#" id = "btn_next">&raquo;</a>
     </div>

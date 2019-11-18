@@ -100,7 +100,10 @@ function ft_createDash(img, div, btn, ediDiv, opt)
     change.setAttribute('id', btn);
     change.setAttribute('class', 'btn-success');
     change.style.opacity = '100%';
-    change.innerHTML = "Want to change "+opt+"? Click.";
+    if (img == 'img5')
+        change.innerHTML = "Want to smile at the Camera? Click.";
+    else
+        change.innerHTML = "Want to change "+opt+"? Click.";
     change.setAttribute('type', 'button');
     editDiv.appendChild(change);
     dash.appendChild(editDiv);
@@ -180,8 +183,6 @@ window.addEventListener('load', (event)=>
                 textLabel.innerHTML = "Type the new email address:";
                 check.style.display = 'none';
                 notLabel.style.display = 'none';
-              /*  $link = "http://localhost:8080/camagru/includes/server/newpass.php?id=$email&uni_code=$code";
-                mail($email, $reset_subj, $link, $sender);*/
                 session_start();
                 session_unset();
                 session_destroy();

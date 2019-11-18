@@ -13,9 +13,12 @@
         
         if (is_file($img_dir))
         {
-            unlink($img_dir);
             try
             {
+                unlink($img_dir);
+                $sql = "SET FOREIGN_KEY_CHECKS=0";
+                $res = $obj->prepare($sql);
+                $res->execute();
                 $sql = "DELETE FROM images WHERE image_name = ? AND id = ?";
                 $res = $obj->prepare($sql);
                 $res->bindParam(1, $name);
